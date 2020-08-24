@@ -1,0 +1,154 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{utopia} %font utopia imported
+\usetheme{Madrid}
+\usecolortheme{default}
+%------------------------------------------------------------
+%This block of code defines the information to appear in the
+%Title page
+\title[FAIR{\_}Bioinfo] %optional
+{FAIR{\_}bioinfo for bioinformaticians}
+
+\subtitle{Introduction to the tools of reproducibility in bioinformatics}
+
+\author[Céline, Claire] % (optional)
+{C.~Hernandez\inst{1} \and T.~Denecker\inst{1} \and C.~Toffano-Nioche\inst{1}}
+
+\institute[I2BC] % (optional)
+{
+  \inst{1}%
+  Institute for Integrative Biology of the Cell (I2BC)\\
+  UMR 9198, Université Paris-Sud, CNRS, CEA\\
+  91190 - Gif-sur-Yvette, France
+%  \and
+%  \inst{2}%
+%  Faculty of Chemistry\\
+%  Very Famous University
+}
+
+\date[IFB 2020] % (optional)
+{Sept. 2020}
+
+\logo{\includegraphics[height=1cm]{shared/logo-ifb.jpg}}
+
+
+%End of title page configuration block
+%------------------------------------------------------------
+\begin{document}
+ \input{shared/logos}
+%-------------------------------------------
+\begin{frame}
+%-------------------------------------------
+    \titlepage
+\end{frame}
+%-------------------------------------------
+\begin{frame}{Objectifs pédagogiques, public ciblé }
+%-------------------------------------------
+\begin{description}
+  \item[Public cible :] ayant des bases en bio-informatique
+  \item[Objectifs :] introduction à des outils permettant d'améliorer la reproductibilité des analyses bioinformatiques
+\end{description}
+
+
+{\bf \textcolor{blue}{Cible 2 savoir-faire métier :}}
+\begin{itemize}
+        \item traitement automatisé de données brutes
+        \item analyse des données traitées
+    \end{itemize} 
+{\bf \textcolor{blue}{Pédagogie en 2 temps :}}
+    \begin{itemize}
+        \item introduction des fonctionnalités (courtes présentations)
+        \item illustration par des travaux pratiques (RNA-seq DEG)
+    \end{itemize}
+\end{frame}
+%-------------------------------------------
+\begin{frame}{Programme}
+%-------------------------------------------
+\begin{center}
+Sur deux jours, 6 sessions d'environ 1h30.
+\end{center}
+\begin{center}
+\begin{tabular}{| r | l |}
+\hline
+    Introduction to reproducibility & \\
+    \hline \hline
+    Encapsulate tasks execution & docker\\
+    \hline
+    Manage executions for parallelization & snakemake\\ 
+    \hline \hline
+    Manage a software environment, versioning & conda, git \\
+    \hline
+    Traceability with notebooks & jupyter \\
+    \hline \hline
+    Share and deploy & github, zenodo \\
+\hline
+\end{tabular}
+\end{center}
+\end{frame}
+%-------------------------------------------
+\begin{frame}{Sessions pratiques 1/2}
+%-------------------------------------------
+\begin{center}
+{\bf \textcolor{blue}{1. Introduction to reproducibility}}
+\begin{enumerate}
+    \item pas de session pratique
+\end{enumerate}
+\end{center}
+\begin{center}
+{\bf \textcolor{blue}{2. Encapsulate tasks execution}}
+\begin{enumerate}
+    \item interactions avec une image docker (samtools flagstat)
+    \item lancements de containers depuis un script bash
+    \item utilisation/démo de singularity sur le cluster de l'IFB ?
+\end{enumerate}
+{\bf \textcolor{blue}{3. Workflow management}}
+\begin{enumerate}
+    \item snakemake simple pour un outil du pipeline (samtools flagstat)
+    \item lancement d'un workflow plus complexe (fourni) en local
+    \item idem mais sur le cluster IFB ?
+\end{enumerate}
+\end{center}
+\end{frame}
+%-------------------------------------------
+\begin{frame}{Sessions pratiques 2/2}
+%-------------------------------------------
+\begin{center}
+{\bf \textcolor{blue}{4. Manage a software environment}}
+\begin{enumerate}
+    \item conda : manipulation de base de conda
+    \item conda : installation de samtools
+    \item git : installation de git avec conda
+    \item git : manipulation de git
+\end{enumerate}
+{\bf \textcolor{blue}{5. Traceability with notebooks}}
+\begin{enumerate}
+%    \setcounter{enumi}{2}
+    \item utilisation de RStudio (install avec conda ou instance IFB ?)
+%    \setcounter{enumi}{0}
+    \item créer/exécuter le notebook de l'analyse DESeq2 (table DE, vocano-plot)
+    \item {\it (si temps : création/démo d'une mini-appli Rshiny)}
+\end{enumerate}
+{\bf \textcolor{blue}{6. Share and deploy}}
+\begin{enumerate}
+    \item démo? DOI, Zenodo, Release, Licence, basculer sur GitHub
+    \item partie pratique à définir
+\end{enumerate}
+\end{center}
+\end{frame}
+%-------------------------------------------
+\begin{frame}{Matériels pédagogiques}
+%-------------------------------------------
+Accès aux données (à terme) : 
+\begin{center}
+%    \logoCNRS : dépôt sur mycore (CNRS) - \logoGithub : dépôt sur GitHub
+    \logoIdeuxBC : dépôt sur I2BC - \logoGithub : dépôt sur GitHub
+\end{center}
+\begin{itemize}
+  \item raw data ($\sim$750 Mo \logoIdeuxBC): 6 RNAseq ($\sim 6*20$ Mo), génome ($13$ Mo), annotations ($9$ Mo)
+  \item processed data \logoIdeuxBC: bam, counts table
+  \item scripts \logoGithub: pipeline (script bash, snakemake), notebooks
+  \item slides (\LaTeX beamer/PDF \logoGithub,\logoIdeuxBC)
+\end{itemize}
+\end{frame}
+\end{document}

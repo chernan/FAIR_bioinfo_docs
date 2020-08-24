@@ -1,0 +1,68 @@
+
+%-------------------------------------------
+\begin{frame}{Schedule}
+%-------------------------------------------
+Introduction to snakemake workflow\\
+\quad \quad \textcolor{gray}{\it Exercise 1: one unique step}\\
+From bash script to snakemake\\
+\quad \quad \textcolor{gray}{\it Exercise 2: workflow of the RNAseq analysis}\\
+\quad \quad \textcolor{gray}{\it Exercise 3: Running the snakemake workflow on our laptop}\\
+\end{frame}
+
+
+%C’est quoi un workflow ?
+%Snakemake = à base de règles
+%La parallélisation
+%
+%Interagir avec un snakemake avec une étape 
+%
+%Passer d’un script.sh “classique” en WF snakemake
+
+%-------------------------------------------
+\subsection[WorkflowIntro]{Introduction to workflow}
+%-------------------------------------------
+\begin{frame}{}
+    \huge{Introduction to snakemake workflow}
+\end{frame}
+\input 03_workflow/introductionToWorkflow.tex
+%-------------------------------------------
+\subsection[SnakemakeEx1]{Exercise 1: one unique step}
+%-------------------------------------------
+\begin{frame}{}
+    \huge{Exercise 1 : first snakefile}
+\end{frame}
+\input 03_workflow/firstStepWorkflow_TP.tex
+%-------------------------------------------
+\subsection[bash2snakemake]{From bash script to snakemake workflow}
+%-------------------------------------------
+\begin{frame}{How To?}
+    \huge{From bash script to snakemake workflow}
+\end{frame}
+\input 03_workflow/fromBash2Snakemake.tex
+%-------------------------------------------
+\subsection[SnakemakeEx2]{Exercise 2: finalize the RNAseq analysis workflow}
+%-------------------------------------------
+\begin{frame}{}
+    \huge{Exercise 2: workflow of the RNAseq analysis}
+\end{frame}
+\input 03_workflow/RNAseqWorkflow_TP.tex
+%-------------------------------------------
+\begin{frame}{Snakemake conclusion}
+%-------------------------------------------
+\begin{block}{Power gain}
+We have transposed the shell srcipt to a snakefile associated to a configuration file. This solution will be more powerful when we apply it in a High Performance Computing environment like the IFB cluster.
+\end{block}
+\begin{block}{Reprodicibility issue}
+In terms of reproducibility, we have to focus on the tools environment.
+\end{block}
+\end{frame}
+%-------------------------------------------
+\begin{frame}{Ressources}
+\begin{description}
+    \item [Official documentation] https://snakemake.readthedocs.io/en/stable/
+    \item [Johannes Koëster publication] https://doi.org/10.1093/bioinformatics/bts480
+    \item [bioinfo-fr.net]  https://bioinfo-fr.net (+search snakemake)
+    \item [begining of a gitbook] https://endrebak.gitbooks.io/the-snakemake-book
+\end{description}
+    
+\end{frame}
