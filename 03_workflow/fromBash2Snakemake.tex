@@ -7,7 +7,7 @@
     \item the rule and the workflow concepts, the snakefile
     \item how rules are linked thank to input/output files and the first rule, the target rule
     \item how to generalize the inputs of a rule using wildcards on filenames (and the expand function)
-    \item how to redirect stdout and sdterr streams (log)
+    \item how to redirect stdout and stderr streams (log)
 \end{itemize}
 \end{block}
 \begin{block}{From now, we will seen:}
@@ -15,8 +15,8 @@
     \item some snakemake options: to visualize the workflow diagram, use a dry-run option, etc
     \item adding a configuration file
     \item getting file names from the file system
-    \item \alert{the container directive ???}
-    \item \alert{how to run snakemake on cluster ???}
+    %\item \alert{the container directive ???}
+    %\item \alert{how to run snakemake on cluster ???}
 \end{itemize}
 \end{block}
 \end{frame}
@@ -25,10 +25,10 @@
 \frametitle{Snakemake DAG visualization}
 %-------------------------------------------
 \begin{block}{}
-Snakemake use Graphviz (\verb|dot| command) to create graphical visualisations, for the complete workflow (--dag) or for the rules dependencies (--rulegraph):
+Snakemake use Graphviz (\verb|dot| command) to create graphical visualisations, for the complete workflow (\verb|--dag|) or for the rules dependencies (\verb|--rulegraph|):
 \begin{lstlisting}
-snakemake --dag  | dot | display
-snakemake --dag  | dot -Tpng > dag.png
+snakemake --dag | dot | display
+snakemake --dag | dot -Tpng > dag.png
 \end{lstlisting}
 \end{block}
 \begin{center}
@@ -42,7 +42,7 @@ snakemake --dag  | dot -Tpng > dag.png
 %-------------------------------------------
 \begin{block}{Running options}
 \begin{itemize}
-    \item automatically create HTML reports (\verb|--report report.html|) containing runtime statistics, a visualization of the workflow topology, used software and data provenance information
+    \item automatically create HTML reports (\verb|--report report.html|) containing runtime statistics, a visualization of the workflow topology, used software and data provenance information (need to add jinja2 in dependencies)
     \item dry-run, do not execute anything, display what would be done: \verb|-n --dryrun|
     \item print the executed shell command: \verb|-p --printshellcmds |
     \item print the reason for each rule execution: \verb|-r --reason|
@@ -55,14 +55,14 @@ snakemake --dag  | dot -Tpng > dag.png
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Some Snakemake options}
+\frametitle{Some Snakemake options: configuration file}
 %-------------------------------------------
-\begin{block}{Configuration file}
-Use a configuration file to place all hard-coding values (paths, core numbers, parameters, etc):
+\begin{block}{Why and how to use a configuration file?}
+To place all hard-coding values of the snakefile (paths, core numbers, parameters, etc)
 \begin{itemize}
-    \item can be write both in yml or in json
-    \item add Snakemake option: \verb|--configfile file.yml| or add \verb|configfile: file.yml| at the beginning of the snakefile
-    \item Snakefile call of defined items: \verb|config["item1"]| in input/output directive and \verb|{config[item1]}| in shell directive
+    \item file: can be write both in yml or in json
+    \item run: add Snakemake option: \verb|--configfile file.yml| or add \verb|configfile: file.yml| at the beginning of the snakefile
+    \item writing: snakefile call of defined items: \verb|config["item1"]| in input/output directive and \verb|{config[item1]}| in shell directive
 \end{itemize}
 \end{block}
 \end{frame}
@@ -84,24 +84,34 @@ Don't forget the coma after the name (left hand side, \verb|IDs| here).
 \begin{frame}[containsverbatim]
 \frametitle{Conda environment}
 %-------------------------------------------
-\begin{block}{}
+\begin{block}{Snakemake and conda}
 In the practical exercise we will have one conda environment for executing the whole Snakemake workflow. \\
 Snakemake also supports using explicit conda environments on a per-rule basis:
 \begin{itemize}
-    \item add the \verb|conda: rule-specific-env.yml| directive in the rule definition 
-    \item run Snakemake with the \verb|--use-conda| option 
+    \item add the \verb|conda:| directive in the rule definition :
+\begin{lstlisting}
+    conda: rule-specific-env.yml
+\end{lstlisting}
+    \item run Snakemake with the \verb|--use-conda| option
 \end{itemize}
 The specified environment will be created and activated on the fly by Snakemake and the rule will then be run in the conda environment.
 \end{block}
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Container directive}
+\frametitle{IFB cluster options}
 %-------------------------------------------
-\end{frame}
-%-------------------------------------------
-\begin{frame}[containsverbatim]
-\frametitle{Cluster option}
-%-------------------------------------------
-
+\begin{block}{interactive session}
+To use the option \verb|--cores=2|, don't forget to ask 2 CPUS for the interactive session (\verb|sinteractive --cpus=2|)
+\end{block}
+\begin{block}{cluster mode}
+To launch the snakefile on a cluster mode, just do:
+\begin{itemize}
+    \item load the \verb|slurm-drmaa| module
+    \item run snakemake with the \verb|--drmaa| option
+\begin{lstlisting}
+snakemake --drmaa --jobs=12 -s ex2_o6.smk --configfile ex2_o1.yml
+\end{lstlisting}
+\end{itemize}
+\end{block}
 \end{frame}

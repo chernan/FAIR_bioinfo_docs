@@ -1,0 +1,126 @@
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Objective}
+%-------------------------------------------
+%\begin{exampleblock}{We will}
+%\begin{itemize}
+%    \item 
+%\end{itemize}
+%\end{exampleblock}
+\begin{exampleblock}{Reminder}
+\begin{itemize}
+    \item We have already used (blind) conda and its strategy for defining environments!
+    \item We are now going to explain what we used before
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Example of a conda configuration file}
+%-------------------------------------------
+\begin{exampleblock}{envfair.yml}
+\begin{lstlisting}[language=python]
+channels:
+  - conda-forge
+  - bioconda
+  - main
+  - default
+dependencies:
+  - python=3.7.6 # specify python version (not required but can help with downstream conflicts)
+  - snakemake-minimal=5.10.0 # workflow manager
+  - graphviz=2.42.3 # for visualisation
+  - xorg-libxrender
+  - xorg-libxpm
+  - wget=1.20.1 # for downloading files
+  - fastqc=0.11.9 # for the RNAseq analysis
+  - bowtie2=2.4.1
+  - samtools=1.10
+  - subread=2.0.1
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Conda setup}
+%-------------------------------------------
+\begin{exampleblock}{How to access conda?}
+\begin{itemize}
+    \item Conda is so used that it could even be installed by default to your machine. To test this: \verb|conda --version|
+    \item if not, may install it or got it by a docker image:
+\begin{lstlisting}
+docker run -i -t -v ${PWD}:/data continuumio/miniconda3
+\end{lstlisting}
+    \item on the IFB cluster, with modules: \verb|module load conda|
+\end{itemize} 
+\end{exampleblock}
+\begin{exampleblock}{Conda environment}
+We have already use a conda configuration file in the workflow session:
+\begin{lstlisting}
+conda env create -n envfair -f envfair.yml
+conda activate envfair
+\end{lstlisting}
+We will next detail the content of the configuration file, \verb|envfair.yml|
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{How to access tools?}
+%-------------------------------------------
+\begin{exampleblock}{Manage Conda environment}
+\begin{enumerate}
+    \item create the working environment:
+\begin{lstlisting}
+conda create env -n myenv
+\end{lstlisting}
+    \item activate it: 
+\begin{lstlisting}
+conda activate myenv
+\end{lstlisting}
+    \item if not yet done, install packages (specify the channel): 
+\begin{lstlisting}
+conda install -c bioconda bowtie2
+\end{lstlisting}
+    \item work with the tools
+    \item quite the environment: 
+\begin{lstlisting}
+conda deactivate
+\end{lstlisting}
+\end{enumerate}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Install Snakemake}
+%-------------------------------------------
+\begin{exampleblock}{Objective}
+Create a conda configuration file to install the snakemake tool.
+\end{exampleblock}
+\begin{exampleblock}{Hint}
+\begin{itemize}
+    \item Search the channel in the Anaconda cloud web pages
+    \item the "minimal" environment is sufficient
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Install Snakemake}
+%-------------------------------------------
+\begin{exampleblock}{condaEnvSnakemake.yml}
+\begin{lstlisting}
+channels:
+  - conda-forge
+  - bioconda
+  - main
+dependencies:
+  - snakemake-minimal=5.10.0
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{run}
+\begin{lstlisting}
+conda create env -n condaEnvSnakemake -f condaEnvSnakemake.yml
+conda activate condaEnvSnakemake
+snakemake ...
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}

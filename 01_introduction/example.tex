@@ -21,7 +21,7 @@ Ostreococcus tauri is a new model green alga for studying iron metabolism in euk
 %-------------------------------------------
 \begin{block}{Genome}
     \begin{itemize}
-        \item sequence: GCF\_000214015.3\_version\_140606\_genomic.fna
+        \item sequence: GCF\_000214015.3\_version\_140606\_genomic.fna (\url{https://www.ncbi.nlm.nih.gov/assembly/GCF_000214015.3/})
         \item annotation: GCF\_000214015.3\_version\_140606\_genomic.gff
         \item $\Rightarrow$ 13.0328 Mb, 20 chromosomes, mitochondria, $\&$ chloroplast
     \end{itemize}
@@ -30,9 +30,30 @@ Ostreococcus tauri is a new model green alga for studying iron metabolism in euk
     \begin{itemize}
       \item Project: \href{https://www.ebi.ac.uk/ena/browser/view/PRJNA304086}{PRJNA304086}
       \item Selection samples 11 and 12: SRR3099585-87, SRR3105697-99 (fastq.gz ${\sim}$360M each x 6 files)
-      \item Reads selection to reduce data volume for the course (mapped on the smalest chromosome, chr18, NC\_014443.2 + 100000 firs) $\Rightarrow$ *$\_$chr18.fastq.gz ${\sim}$19M each
+      \item Reads selection to reduce data volume for the course (mapped on the smalest chromosome, chr18, NC\_014443.2 + 100000 first) $\Rightarrow$ *$\_$chr18.fastq.gz ${\sim}$19M each (\small{\url{https://zenodo.org/record/3997237}})
+      \item Counts table, complete RNAseq: \small{\url{https://zenodo.org/record/4008452}}
     \end{itemize}
 \end{block}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Data}
+%-------------------------------------------
+\begin{exampleblock}{Access in the IFB ressources}
+\begin{lstlisting}
+/shared/projects/fair_training2020/Data/
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{Or raw download in a local "Data" directory}
+\begin{lstlisting}
+mkdir Data ; cd Data
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/214/015/GCF_000214015.3_version_140606/GCF_000214015.3_version_140606_genomic.fna.gz
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/214/015/GCF_000214015.3_version_140606/GCF_000214015.3_version_140606_genomic.gff.gz
+wget https://zenodo.org/record/3997237/files/FAIR_Bioinfo_data.tar.gz
+wget https://zenodo.org/record/3997137/files/counts.txt
+cd ..
+\end{lstlisting}
+\end{exampleblock}
 \end{frame}
 %-------------------------------------------
 \begin{frame}[label=RNAseqWF_diapo]{RNAseq analysis}

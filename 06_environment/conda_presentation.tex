@@ -1,0 +1,108 @@
+% \begin{frame}{Extrait du programme IFB}
+% Pourquoi un gestionnaire d’environnements et de packages ?\\
+% Installation de packages avec Conda\\
+% Utilisation d’environnement Conda\\
+%
+%TP: Création d’un script d’installation avec conda :\\
+% installer snakemake avec conda\\
+% \end{frame}
+%----------------------------------------
+\begin{frame}{\includegraphics[height=0.5cm]{shared/logo-conda.png}: an environment manager}
+%----------------------------------------
+\begin{block}{Why using an environment manager?}
+\begin{itemize}
+    \item avoid compilation and dependencies problems: an environment manager will take care of everything!
+    \item have several environments in parallel each with their own set of tools
+    \item useful when cross-tools dependencies are incompatible with each other
+\end{itemize}
+\end{block}
+\begin{block}{Conda concepts, objetcs}
+    \begin{itemize}
+        \item Environment: a set of packages/tools in a directory (added to our PATH)
+        \item Conda: an open source package + a general-purpose environment management system (installation, execution, upgrade). For any programming language, multi-platform (Windows, MacOS, Linux).
+        \item Conda package: a compressed tarball
+    \end{itemize}
+\end{block}
+\end{frame}
+%----------------------------------------
+\begin{frame}{\includegraphics[height=0.5cm]{shared/logo-conda.png}: Access}
+%----------------------------------------
+\begin{block}{Conda distribution}
+\begin{itemize}
+        \item Anaconda: a data science platform, comes with a lot of packages
+        \item Miniconda: come without installed packages
+\end{itemize}
+\end{block}
+\begin{block}{Anconda cloud, the "conda hub"}
+\begin{itemize}
+    \item \href{http://anaconda.org/}{\textcolor{blue}{\underline{Anaconda cloud}}}
+    (private company) relies on the community of developers, concerns many domains (Machine Learning, Data Visualization, Dashboarding-web, Image Processing, Natural Language Processing, etc)
+    \item Anaconda cloud: made up of channels/owners. Each channels contains one or more conda packages 
+    \item be careful when downloading any packages from an untrusted source, always inspect before installation
+\end{itemize}
+\end{block}
+\end{frame}
+%----------------------------------------
+\begin{frame}{\includegraphics[height=0.5cm]{shared/logo-conda.png} About channels}
+%----------------------------------------
+\begin{block}{Some conda channels}
+\begin{itemize}
+    \item defaults
+    \item bioconda: bioinformaticians contributions
+    \item conda-forge: many popular python packages (analogous to PyPI but with a unified, automated build infrastructure and more peer review of recipes)
+    \item r: for packages in R language
+\end{itemize}
+
+\end{block}
+\begin{block}{Channels list order}
+\begin{itemize}
+    \item when different channels have the same package $\Rightarrow$ collisions
+    \item collisions resolved following the order of your channels list $\Rightarrow$ put supplemental channels at the bottom of your channel list
+\end{itemize}
+\end{block}
+\end{frame}
+%----------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\includegraphics[height=0.5cm]{shared/logo-conda.png} command}
+%----------------------------------------
+\begin{block}{simple commands}
+\begin{lstlisting}[language=python]
+conda create env -n myenv # creation of a conda environment 
+conda info --envs # list environments (* for the active one) 
+conda activate myenv # active the myenv environment
+conda deactivate # inactivate the environment
+conda list # list packages (only in an active environment)
+conda install package # installation of a tool/package
+conda remove package # suppress the tool from the package
+conda env remove -n myenv # suppress the myenv environment
+\end{lstlisting}
+\end{block}
+\begin{block}{miniconda3}
+With the miniconda3 distribution and by default, environments are installed in a miniconda3/envs/ repository
+\end{block}
+\end{frame}
+%----------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\includegraphics[height=0.5cm]{shared/logo-conda.png} 2 modes}
+%----------------------------------------
+\begin{block}{interactive}
+\begin{itemize}
+    \item create an environment
+    \item activate the environment
+    \item install some conda packages
+\end{itemize}
+\end{block}
+\begin{block}{configuration file}
+\begin{itemize}
+    \item list all conda packages in a configuration file (yaml or json format)
+    \item create the environment based on the configuration file (option \verb|-f|)
+    \item activate the environment
+\end{itemize}
+\end{block}
+\begin{block}{reproducibility}
+\begin{itemize}
+    \item good practice: use a configuration file
+    \item to specify a precise version of a package use the syntax \verb|<channel>::<package>=<version>| 
+\end{itemize}
+\end{block}
+\end{frame}

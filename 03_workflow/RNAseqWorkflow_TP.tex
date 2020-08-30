@@ -1,5 +1,21 @@
 %-------------------------------------------
-\againframe<2>{RNAseqWF_diapo}
+\begin{frame}{RNAseq analysis}
+%\againframe<2>{RNAseqWF_diapo}
+%-------------------------------------------
+\begin{block}{Analysis workflow}
+    \includegraphics[width=12cm]{01_introduction/images/FAIR_RNAseq_WF.png}\\
+green=input, blue=tool
+\end{block}
+\footnotesize{
+\begin{description}
+    \item[fastqc] control quality of the input reads
+    \item[bowtie2] reads mapping on the genome sequence
+    \item[samtools] mapped reads selection $\&$ formatting
+    \item[HTseq] count table of mapped reads on genes (annotations)
+    \item[DEseq2] statistical analysis: genes list having differential expression
+\end{description}
+}
+\end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
 \frametitle{Data and command line}
@@ -25,7 +41,7 @@ FAIR_initial_script.sh -g ../O.tauri_genome.fna -a ../O.tauri_annotation.gff -d 
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Complete bash script, 1}
+\frametitle{Complete bash script, 1/3}
 %-------------------------------------------
 \begin{exampleblock}{getops block}
 \begin{lstlisting}
@@ -50,7 +66,7 @@ echo samples are $*
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Complete bash script, 2}
+\frametitle{Complete bash script, 2/3}
 %-------------------------------------------
 \begin{exampleblock}{for block}
 \begin{lstlisting}
@@ -73,7 +89,7 @@ for sample in $* ; do
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Complete bash script, 3}
+\frametitle{Complete bash script, 3/3}
 %-------------------------------------------
 \begin{exampleblock}{for block, continuation}
 \begin{lstlisting}
@@ -83,7 +99,7 @@ for sample in $* ; do
    samtools sort ${sample}.bam -o ${sample}_sort.bam
    samtools index ${sample}_sort.bam
    #---------- counting of mapped reads by gene
-   featureCounts -t gene -g ID -a ${annots} -s 1 -o ${sample}_ftc.txt ${sample}_sort.bam > ${sample}_ftc.log 2>&1
+   featureCounts -t gene -g ID -a ${annots} -s 2 -o ${sample}_ftc.txt ${sample}_sort.bam > ${sample}_ftc.log 2>&1
 done
 \end{lstlisting}
 \end{exampleblock}
@@ -136,19 +152,25 @@ Then, run snakemake with the \verb|--configfile| option.
 \begin{frame}[containsverbatim]
 \frametitle{Adding a configuration file}
 %-------------------------------------------
-\begin{exampleblock}{RNAseq.yml}
+\begin{exampleblock}{ex2$\_$o1.yml}
 \begin{lstlisting}
 genome:
   O.tauri.fna
 annots:
   O.tauri.gff
-RNAseqDir:
+dataDir:
   Data/
 \end{lstlisting}
 \end{exampleblock}
-\begin{exampleblock}{Snakemake run}
+\begin{exampleblock}{ex2$\_$o1.smk: "Data/..." in inputs replaced by a config call:}
 \begin{lstlisting}
-rm -Rf FastQC/ Result/ Tmp/ Logs/ ; snakemake -s ex2_o1.smk --configfile RNAseq.yml
+rule genome_bwt2_index:   config["dataDir"]+config["genome"]
+rule fastqc:   config["dataDir"]+"{sample}.fastq.gz"
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{snakemake run:}
+\begin{lstlisting}
+rm -Rf FastQC/ Result/ Tmp/ Logs/ ; snakemake -s ex2_o1.smk --configfile ex2_o1.yml
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}
@@ -167,7 +189,7 @@ done
 To manage all *.fastq.gz files in a directory, use the \verb|glob_wilcards()| function. In \verb|ex2_o2.smk|, replace the SAMPLES definition by:
 \begin{exampleblock}{ex2$\_$o2.smk}
 \begin{lstlisting}
-SAMPLES, = glob_wildcards(config["dataDir"]{sample}.fastq.gz")
+SAMPLES, = glob_wildcards(config["dataDir"]+"{sample}.fastq.gz")
 \end{lstlisting}
 \end{exampleblock}
 and run snakemake.
@@ -203,13 +225,33 @@ bowtie2 -x Bwt2_index/tauri -U ${sample}.fastq.gz -S ${sample}.sam > ${sample}_b
 \end{lstlisting}
 \end{exampleblock}
 2 rules: \verb|genome_bwt2_index| (cf. previous ex.) and \verb|bwt2_mapping|
-\begin{exampleblock}{ex2$\_$o3.smk, rule bwt2$\_$mapping:}
+\begin{exampleblock}{ex2$\_$o3.smk, rule bwt2$\_$mapping (no run):}
 \begin{lstlisting}
   output: "results/{sample}.sam"
   input: config["dataDir"]+"{sample}.fastq.gz",
          expand("Tmp/Otauri.{ext}.bt2", ext=BIDX)
   log: "Logs/{sample}_bwt2_mapping.log"
   shell: "bowtie2 -x Tmp/Otauri -U {input[0]} -S {output} 2> {log} "
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Reads mapping, bowtie2}
+%-------------------------------------------
+\begin{exampleblock}{Why some troubles?}
+The snakemake launch probably didn't do what was expected. 
+What have we forgotten? \\
+We added a new rule to a snakemake but we didn't manage the rule tree, their is no input-output link to include the new rule to the workflow.\\
+We will do that by completing the input directive of the target rule (caution to respect the Python "list" structure, coma-separated).
+\end{exampleblock}
+\begin{exampleblock}{ex2$\_$o2.smk, target rule:}
+\begin{lstlisting}
+rule all:
+  input:
+    expand("FastQC/{sample}_fastqc.html", sample=SAMPLES),
+    expand("Tmp/Otauri.{ext}.bt2", ext=BIDX),
+    expand("Tmp/{sample}.sam", sample=SAMPLES)
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}
@@ -223,7 +265,7 @@ samtools sort -O bam -o ${sample}_sort.bam ${sample}.sam
 samtools index ${sample}_sort.bam
 \end{lstlisting}
 \end{exampleblock}
-\begin{exampleblock}{ex2$\_$o4.smk, rule sam2bam$\_$sort:}
+\begin{exampleblock}{ex2$\_$o4.smk, rule sam2bam$\_$sort (no run):}
 \begin{lstlisting}
   output:
     bam="Result/{sample}_sort.bam",
@@ -244,17 +286,18 @@ samtools index ${sample}_sort.bam
 %-------------------------------------------
 \begin{exampleblock}{Shell script}
 \begin{lstlisting}
-featureCounts -t gene -g ID -a ${annots} -s 1 -o ${sample}_ftc.txt ${sample}_sort.bam > ${sample}_ftc.log 2>&1
+featureCounts -t gene -g ID -a ${annots} -s 2 -o ${sample}_ftc.txt ${sample}_sort.bam > ${sample}_ftc.log 2>&1
 \end{lstlisting}
 \end{exampleblock}
-\begin{exampleblock}{ex2$\_$o5.smk, rule counting:}
+\begin{exampleblock}{ex2$\_$o5.smk, rule counting (params; no run):}
 \begin{lstlisting}
   output: "Tmp/{sample}_ftc.txt"
   input:
     bam="Result/{sample}_sort.bam",
     annot=config["dataDir"]+config["annots"]
+  params: t="gene", g="ID", s="2"
   log: "Logs/{sample}_counts.log"
-  shell: "featureCounts -t gene -g ID -a {input.annot} -s 1 -o {output} {input.bam} &> {log}"
+  shell: "featureCounts -t {params.t} -g {params.g} -a {input.annot} -s {params.s} -o {output} {input.bam} &> {log}"
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}
@@ -280,19 +323,20 @@ Create 2 rules to manage some files aggregation to one result file:
 \begin{frame}[containsverbatim]
 \frametitle{Counts matrix creation}
 %-------------------------------------------
-\begin{exampleblock}{ex2$\_$o6.smk, 2 rules:}
+\begin{exampleblock}{ex2$\_$o6.smk (2 rules, shell 3", copy, run):}
 \begin{lstlisting}
 rule matrix_counts:
   output: "Result/counts_matrix.txt"
   input: countfile=expand("Tmp/{sample}_ftc7.txt", sample=SAMPLES), geneID=expand("Tmp/{sample}_ftc1.txt", sample=SAMPLES)
   log: "Logs/matrix_counts.log"
-  shell: """cp {input.geneID[0]} Tmp/ftc_geneID.txt ; paste Tmp/ftc_geneID.txt {input.countfile} > {output} &> {log}"""
+  shell: """cp {input.geneID[0]} Tmp/ftc_geneID.txt > {log} ; paste Tmp/ftc_geneID.txt {input.countfile} > {output} > {log}"""
 
 rule extract_counts:
-  output: col7="Tmp/{sample}_ftc7.txt", col1="Tmp/{sample}_ftc1.txt"
+  output: col7="Tmp/{sample}_ftc7.txt",
+          col1="Tmp/{sample}_ftc1.txt"
   input: "Tmp/{sample}_ftc.txt"
   log: "Logs/{sample}_extract_counts.log"
-  shell: """cut -f 7- {input} | sed 1d > {output.col7} &> {log} ; cut -f 1 {input} | sed 1d > {output.col1} """
+  shell: """cut -f 7 {input} | sed 1d > {output.col7} > {log} ; cut -f 1 {input} | sed 1d > {output.col1} """
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}
@@ -300,7 +344,9 @@ rule extract_counts:
 \begin{frame}[containsverbatim]
 \frametitle{DESeq2}
 %-------------------------------------------
-The DESeq2 step is the statistical analysis. From the count matrix, the statistical analysis is managed by a non parallelizable R script, DESeq2
+The DESeq2 step is the statistical analysis. From the count matrix, the statistical analysis is managed by a non parallelizable R script, DESeq2.
+\vfill
+So, up to date, the workflow is complete and the only thing left is this DESeq2 statistical analysis. We will see this analysis through the notebooks session.
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]

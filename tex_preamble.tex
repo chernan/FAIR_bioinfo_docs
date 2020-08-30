@@ -1,0 +1,76 @@
+\usepackage[utf8]{inputenc}
+\usepackage{utopia} %font utopia imported
+%-------------------------------------------------
+% slide appearance
+\usetheme{Boadilla}
+\usecolortheme{default}
+
+%-------------------------------------------------
+% listing
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+%--------------------------------------------------
+
+% aide LaTeX : http://l.roussarie.free.fr/IMG/pdf/ltx101-4-2.pdf
+
+\newcommand\FAIRB{FAIR{\_}bioinfo}
+
+%------------------------------------------------------------
+%This block of code defines the information to appear in the
+%Title page
+\title[FAIR{\_}Bioinfo] %optional
+{FAIR{\_}bioinfo for bioinformaticians}
+
+\subtitle{Introduction to the tools of reproducibility in bioinformatics}
+
+\author[Céline, Thomas, Claire] % (optional)
+{C.~Hernandez\inst{1} \and T.~Denecker\inst{1} \and J.Sellier\inst{2}\and C.~Toffano-Nioche\inst{1}}
+
+\institute[I2BC-IFB] % (optional)
+{
+  \inst{1}%https://fr.overleaf.com/project/5e749e3c458ed8000166a12b
+  Institute for Integrative Biology of the Cell (I2BC)\\
+  UMR 9198, Université Paris-Sud, CNRS, CEA\\
+  91190 - Gif-sur-Yvette, France
+\and
+  \inst{2}%
+  Institut de Génétique et de Biologie Moléculaire et Cellulaire (IGBMC)\\
+  CNRS UMR 7104 - Inserm U 1258\\
+  67404 - Illkirch cedex, France
+}
+
+\date[IFB 2020] % (optional)
+{Sept. 2020}
+\logo{\includegraphics[height=0.5cm]{shared/logo-ifb.jpg}}
+
+%End of title page configuration block
+%------------------------------------------------------------
+
+%------------------------------------------------------------
+%logos definition
+ \input{shared/logos}
+
+

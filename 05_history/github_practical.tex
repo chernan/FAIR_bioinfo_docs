@@ -1,0 +1,146 @@
+%-------------------------------------------
+\begin{frame}{\includegraphics[height=0.8cm]{shared/logo-github.png}}
+%-------------------------------------------
+\begin{exampleblock}{Objectives}
+The objective of this exercise is to propose change to an existing project. We will:
+\begin{itemize}
+    \item fork an existing project to our GitHub account
+    \item create a branch
+    \item made a change in the branch
+    \item save change into the change 
+    \item merge the branch 
+\end{itemize}
+\end{exampleblock}
+\begin{exampleblock}{Web interface}
+ During this exercise, most of the actions that will be performed will be done via the GitHub web interface, i.e. with many button clicks. The following pages will guide us to the next action.
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\raisebox{-1ex}{\includegraphics[height=0.8cm]{shared/logo-github.png}}: Access}
+%-------------------------------------------
+\begin{exampleblock}{}
+With a browser, go to github (\verb|https://github.com|). If not already yet, sign up and create your github account, otherwise sign in
+\begin{center}
+    \includegraphics[height=6.4cm]{05_history/Images/FAIR_github_account.png}
+\end{center}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}{\raisebox{-1ex}{\includegraphics[height=0.8cm]{shared/logo-github.png}}: fork a project}
+%-------------------------------------------
+\begin{exampleblock}{Objective}
+For this exercise, we will replay the addition of our first name, but by using the user interface proposed by github.
+\end{exampleblock}
+\begin{exampleblock}{Fork in our gituhb account}
+With a browser, go to the url of the initial project,\href{https://github.com/chernan/super-umbrella}{\textcolor{blue}{\underline{super-umbrella}}} and click to "Fork" (upper right):
+\begin{center}
+    \includegraphics[height=4cm]{05_history/Images/FAIR_githubTP_fork.png}
+\end{center}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\raisebox{-1ex}{\includegraphics[height=0.8cm]{shared/logo-github.png}}: the forked repository}
+%-------------------------------------------
+\begin{exampleblock}{Result:}
+You can see the result in your Github Overview: you have a new repository, named \verb|FAIR_bioinfo_github| and entitled "forked from chernan$\/$super-umbrella".
+\end{exampleblock}
+\begin{exampleblock}{resultof the fork chernan, super-umbrella project:}
+    \begin{center}
+    \includegraphics[height=4cm]{05_history/Images/FAIR_githubTP_forkOk.png}
+    \end{center}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}{\raisebox{-1ex}{\includegraphics[height=0.8cm]{shared/logo-github.png}} interface}
+%-------------------------------------------
+\begin{exampleblock}{Tabs}
+9 Tabs offered by GitHub for each repository: \\
+Code, Issues, Pull Requests, Actions, Projects, Wiki, Security, Insights, Settings.\\
+Mainly focus on 3 of them:
+\end{exampleblock}
+\begin{columns}
+\begin{column}{0.32\textwidth}
+\begin{exampleblock}{Code}
+\begin{center}
+    \includegraphics[height=2.8cm]{05_history/Images/FAIR_github_CodeTab.png}
+\end{center}
+\end{exampleblock}
+\end{column}
+\begin{column}{0.32\textwidth}
+\begin{exampleblock}{Pull Requests}
+\begin{center}
+    \includegraphics[height=2.7cm]{05_history/Images/FAIR_github_PullTab.png}
+\end{center}
+\end{exampleblock}
+\end{column}
+\begin{column}{0.32\textwidth}
+\begin{exampleblock}{Wiki}
+\begin{center}
+    \includegraphics[height=2.7cm]{05_history/Images/FAIR_github_WikiTab.png}
+\end{center}
+\end{exampleblock}
+\end{column}
+\end{columns}
+\end{frame}
+%-------------------------------------------
+\begin{frame}{\raisebox{-1ex}{\includegraphics[height=0.8cm]{shared/logo-github.png}} }
+%-------------------------------------------
+\begin{columns}
+\begin{column}{0.49\textwidth}
+\begin{exampleblock}{Previous exercises with git}
+\begin{itemize}
+    \item copy a github repo. (git clone)
+    \item go to the local repo. (cd)
+    \item create branch (git branch)
+    \item go to branch (git checkout)
+    \item make change (edit file)
+    \item stage change (add)
+    \item version change (commit)
+    \item go to master (git checkout)
+    \item merge branch (git merge)
+    \item delete branch (git branch -d)
+\end{itemize}
+\end{exampleblock}
+\end{column}
+\begin{column}{0.49\textwidth}
+\begin{exampleblock}{Next steps with github GUI:}
+\begin{enumerate}
+    \item fork a github repo. (just done)
+    \item create branch 
+    \item make change (Edit file)
+    \item version change (commit)
+    \item compare branch to master
+    \item merge branch 
+    \item ask for merging (Pull Request)
+    \item delete branch
+\end{enumerate}
+\end{exampleblock}
+\end{column}
+\end{columns}
+\end{frame}
+%--------------------------------------------
+
+
+% captures d'écran différentes selon le dépôt de départ:
+
+%\input{05_history/github_practice_clairetn}
+
+\input{05_history/github_practice_chernan}
+
+
+
+%-------------------------------------------
+\begin{frame}{\raisebox{-1ex}{\includegraphics[height=0.8cm]{shared/logo-github.png}} Conclusion}
+%-------------------------------------------
+\begin{exampleblock}{GitHub GUI}
+\begin{itemize}
+    \item With this exercise, we modified a file in a directory of our own GitHub account. 
+    \item BUT: reserve this click button mode only for minor modifications (relies on a stable and smooth network connection!)
+    \item Also, we collaborated only with ourselves
+    \item In the next exercise, we will do this task again with a "git command line" mode and by collaborating all together.
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+

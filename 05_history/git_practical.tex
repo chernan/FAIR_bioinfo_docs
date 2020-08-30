@@ -1,0 +1,173 @@
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\includegraphics[height=0.8cm]{shared/logo-git.png} Objective}
+%-------------------------------------------
+\begin{exampleblock}{1st exercise}
+\begin{enumerate}
+    \item access and configure git
+    \item initialize a git repository
+    \item create files in this repository
+    \item use the basic git commands for tracking files changes (status, add, commit)
+\end{enumerate}
+\end{exampleblock}
+\begin{exampleblock}{2nd exercise}
+\begin{enumerate}
+\setcounter{enumi}{4}
+    \item copy another repository from github (clone)
+    \item use branching (branch) and merging (merge) to manage code changes
+\end{enumerate}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\raisebox{-1.5ex}{\includegraphics[height=0.8cm]{shared/logo-git.png}}  setup: objectives 1 $\&$ 2}
+%-------------------------------------------
+\begin{exampleblock}{Git access by \alert{doker}}
+\begin{lstlisting}[language=python]
+docker run -i -t -v ${PWD}:/data continuumio/miniconda3
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{Git configuration}
+Global configuration (checking \verb|user.name| with: \verb|git config --list|):
+\begin{lstlisting}[language=python]
+git config --global user.name 'Your Name'
+git config --global user.email 'Your Email'
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{Git repository initialization}
+On a new dedicated folder run: 
+\begin{lstlisting}[language=python]
+git init # observe the .git folder (ls -la)
+git status # find the current branch, "nothing to commit"
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\raisebox{-1.5ex}{\includegraphics[height=0.8cm]{shared/logo-git.png}} adding files: objective 3}
+%-------------------------------------------
+\begin{exampleblock}{create 2 files, check their git status: obj}
+\begin{lstlisting}[language=python]
+for i in 1 2 ; do echo "file"${i}" text" > file${i}.txt ; done
+git status # observe list of untracked files
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{add file1 to stating area}
+\begin{lstlisting}[language=python]
+git add file1.txt
+git status # observe the changing status of file1: untracked => staged
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{change file1 text}
+\begin{lstlisting}[language=python]
+sed 's/text/text change/' file1.txt > tmp ; mv tmp file1.txt
+git status # observe the 3 states, why file1 appears in "to be commited" and also in "not staged for commit"?
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\raisebox{-1.5ex}{\includegraphics[height=0.8cm]{shared/logo-git.png}} commit: objective 4}
+%-------------------------------------------
+\begin{exampleblock}{stage all files}
+\begin{lstlisting}[language=python]
+git add file1.txt file2.txt # all files
+git status
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{commit}
+\begin{lstlisting}[language=python]
+git commit -m "1st commit + file1 change" # always add a message, use present time to explain the change
+git status # all ok
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}{\raisebox{-1.5ex}{\includegraphics[height=0.8cm]{shared/logo-git.png}}}
+%-------------------------------------------
+\begin{exampleblock}{}%summary
+     So far, we have initiated a new project whose code is versioned by git: we have created files and all their successive changes were saved thanks to git.
+\end{exampleblock}
+\begin{exampleblock}{}%next step
+    We will now create a 2nd project by copying an already existing one.\\ We're going to bring this project from an online git project site, \textit{e.g.} github.
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\raisebox{-1.5ex}{\includegraphics[height=0.8cm]{shared/logo-git.png}} cloning: objective 5}
+%-------------------------------------------
+\begin{exampleblock}{copy of a project: clone}
+To download a project from github, we use the git \verb|clone| command:
+\begin{lstlisting}
+git clone https://github.com/clairetn/FAIR_bioinfo_github.git
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{observe result}
+\begin{itemize}
+    \item a new folder has been created (check with the shell \verb|ls| command)
+    \item its name is directly deduced from the url used
+    \item this \verb|FAIR_bioinfo_github| folder contains a \verb|.git| repository and also a \verb|README.md| file (see with \verb|ls -la FAIR_bioinfo_github/|)
+    \item it is a minimal project!
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\raisebox{-1.5ex}{\includegraphics[height=0.8cm]{shared/logo-git.png}} branching: objective 6}
+%-------------------------------------------
+\begin{exampleblock}{}
+We plan to change the README file by adding our firstname at the authors list. With a git versioning system, a good practice is to create a branch to reserve the initial code until we validate our change.
+\end{exampleblock}
+\begin{exampleblock}{create a branch nammed "branch1"}
+\begin{lstlisting}[language=python]
+cd FAIR_bioinfo_github
+git branch branch1
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{list all branches}
+\begin{lstlisting}[language=python]
+git branch # find the star
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\raisebox{-1ex}{\includegraphics[height=0.8cm]{shared/logo-git.png}} branching: objective 6}
+%-------------------------------------------
+\begin{exampleblock}{go into the new "branch1"}
+\begin{lstlisting}[language=python]
+git checkout branch1
+git branch # find the star
+git status # find the branch
+\end{lstlisting}
+% ls -la # copy of the master branch (see date)
+\end{exampleblock}
+\begin{exampleblock}{work inot branch: change a file and keep change}
+Edit the \verb|README.md| file and add your firstname to the "Authors list"
+\begin{lstlisting}[language=python]
+git status # file README.md is modified
+git add README.md ; git commit -m "add my firstname in branch1"
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{return to master branch}
+\begin{lstlisting}[language=python]
+git checkout master
+more README.md # Is README.md modified or initial version?
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{\raisebox{-1.5ex}{\includegraphics[height=0.8cm]{shared/logo-git.png}} merging branch: objective 6}
+%-------------------------------------------
+\begin{exampleblock}{}
+We have check that our change is valid, so we now plan to move it into the \verb|master| branch.
+\end{exampleblock}
+\begin{exampleblock}{merge branch, then delete branch}
+\begin{lstlisting}[language=python]
+git merge branch1
+more README.md # what README.md version?
+git branch -d branch1 # -d for delete
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
