@@ -1,5 +1,6 @@
 %-------------------------------------------
-\begin{frame}{\includegraphics[height=0.8cm]{shared/logo-git.png}}
+\begin{frame}[containsverbatim]
+\frametitle{\includegraphics[height=0.8cm]{shared/logo-git.png}}
 %-------------------------------------------
 \begin{block}{Concepts, objects}
 \begin{itemize}
@@ -7,7 +8,7 @@
     \item staging area: list of files of the working directory that will be considered for next commit (ie. could be not all the modified files)
     \item clone: a local copy of a repository (include all commits and branches), the original repository can be local, or remote (http access)
     \item commit: a git object, the snapshot of your entire repository compressed into a SHA (also the command the saves changes by creating the snapshot)
-    \item HEAD: pointer representing your current working directory. Can be moved (git checkout) to different branches, tags, or commits 
+    \item HEAD: pointer representing your current working directory. Can be moved (\verb|git checkout|) to different branches, tags, or commits 
     \item branch: a lightweight movable pointer to a commit
     \item merge: combines remote tracking branches into current local branch
 \end{itemize}
@@ -36,9 +37,9 @@ git config --global user.email 'Your Email'
     \column{0.52\textwidth}
    3 ways to initialize a .git repository:
    \begin{itemize}
-       \item git init: inside an existing folder (possibly containing files)
-       \item git init project: create the folder "project" + initializes the .git subfolder inside it
-       \item git clone /gitfolder/path /new/path copy the existing git repository to a new one
+       \item \verb|git init|: inside an existing folder (possibly containing files)
+       \item \verb|git init myproject|: create the folder "myproject" + initializes the .git subfolder inside it
+       \item \verb|git clone /gitfolder/path /new/path|: copy the existing git repository to a new one
     \end{itemize}
 \end{columns}
 \end{block}

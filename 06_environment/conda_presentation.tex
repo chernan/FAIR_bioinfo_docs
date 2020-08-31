@@ -9,19 +9,19 @@
 %----------------------------------------
 \begin{frame}{\includegraphics[height=0.5cm]{shared/logo-conda.png}: an environment manager}
 %----------------------------------------
+\begin{block}{Conda concepts, objetcs}
+    \begin{itemize}
+        \item Environment: a set of packages/tools in a directory (added to our PATH)
+        \item Conda: an open source package + a general-purpose environment management system (installation, execution, upgrade). For any programming language, multi-platform (Windows, MacOS, Linux).
+        \item Conda package: a compressed tarball of a tool
+    \end{itemize}
+\end{block}
 \begin{block}{Why using an environment manager?}
 \begin{itemize}
     \item avoid compilation and dependencies problems: an environment manager will take care of everything!
     \item have several environments in parallel each with their own set of tools
     \item useful when cross-tools dependencies are incompatible with each other
 \end{itemize}
-\end{block}
-\begin{block}{Conda concepts, objetcs}
-    \begin{itemize}
-        \item Environment: a set of packages/tools in a directory (added to our PATH)
-        \item Conda: an open source package + a general-purpose environment management system (installation, execution, upgrade). For any programming language, multi-platform (Windows, MacOS, Linux).
-        \item Conda package: a compressed tarball
-    \end{itemize}
 \end{block}
 \end{frame}
 %----------------------------------------
@@ -73,7 +73,7 @@ conda activate myenv # active the myenv environment
 conda deactivate # inactivate the environment
 conda list # list packages (only in an active environment)
 conda install package # installation of a tool/package
-conda remove package # suppress the tool from the package
+conda remove package # suppress the tool from the environment
 conda env remove -n myenv # suppress the myenv environment
 \end{lstlisting}
 \end{block}
@@ -102,7 +102,7 @@ With the miniconda3 distribution and by default, environments are installed in a
 \begin{block}{reproducibility}
 \begin{itemize}
     \item good practice: use a configuration file
-    \item to specify a precise version of a package use the syntax \verb|<channel>::<package>=<version>| 
+    \item specify a precise version of a package:  \verb|<channel>::<package>=<version>| 
 \end{itemize}
 \end{block}
 \end{frame}

@@ -78,6 +78,33 @@ Reproducibility is a multi-dimensional process
 
 \end{frame}
 
+%-------------------------------------------
+\begin{frame}{\FAIRB}
+
+\begin{center}
+    \includegraphics[width=12cm]{09_conclusion/images/FAIR_7steps_reproducibility.png}
+\end{center}
+
+\end{frame}
+
+%-------------------------------------------
+\begin{frame}{Swedish similar tutorial}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\begin{center}
+    \includegraphics[width=6.5cm]{09_conclusion/images/NBIS_tutorials_overview.png}
+\end{center}
+\end{column}
+\begin{column}{0.3\textwidth}
+\begin{center}
+    %\includegraphics[width=6cm]{09_conclusion/images/NBIS_learning_scheme.png}
+    \href{https://nbis-reproducible-research.readthedocs.io/en/latest/tutorial_intro/%#the-tutorials
+    }{\textcolor{blue}{nbis-reproducible-research.readthedocs.io}}: Tutorials, Introduction to the tutorial
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+
 %------------------------------------------------------------
 \subsection{What now?}
 
@@ -135,6 +162,41 @@ Reproducibility is a multi-dimensional process
 \end{frame}
 
 %---------------------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Adding Tests}
+\begin{block}{Unit test: test a part of the code}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{lstlisting}[language=python]
+## module 1
+sum <- function(x, y){
+    return (x+y)
+}
+
+# Unit test
+sum(2,2) == 4
+\end{lstlisting}
+\column{0.5\textwidth}
+\begin{lstlisting}[language=python]
+## module 2
+power <- function(x, y){
+    return (x**y)
+}
+
+# Unit test
+power(2,2) == 4
+\end{lstlisting}
+\end{columns}
+\end{block}
+\begin{block}{Functional test: test all the code}
+\begin{lstlisting}[language=python]
+# Functional test
+power(sum(2,2),2) == 16
+\end{lstlisting}
+\end{block}
+\end{frame}
+
+%---------------------------------------------------------
 \begin{frame}{Continuous integration}
 
 Verification at each source code modification that the result of the modifications does not produce:
@@ -170,11 +232,11 @@ GitHub Actions
 \end{block}
 \begin{block}{Reproducibility to the exact bit?}
 \includegraphics[height=0.3cm]{05_history/Images/FAIR_no.png} container uses some resources of the support machine\\
-\includegraphics[height=0.3cm]{05_history/Images/FAIR_no.png} version control of the env. (Nix, Guix)
+\includegraphics[height=0.3cm]{05_history/Images/FAIR_yes.png} version control of the env. (Nix, Guix)
 \end{block}
 \begin{block}{Parallelization:}
 \includegraphics[height=0.3cm]{05_history/Images/FAIR_no.png} loss of computational order, multi-threading, same hardware?\\
-\includegraphics[height=0.3cm]{05_history/Images/FAIR_no.png}
+\includegraphics[height=0.3cm]{05_history/Images/FAIR_yes.png}
 ...?
 \end{block}
 \end{columns}
@@ -209,8 +271,9 @@ GitHub Actions
 \begin{frame}{Thanks}
 \begin{itemize}
     \item Organizational comity (our guardian angels): Yousra, Jacques, Hélène
-    \item NNCR team force: Julien, Gildas, and those who provide in the shadows
+    \item IFB Core Cluster taskforce: Julien, Gildas, and those who provide in the shadows
+    \item Helper: Paulette
     \item beta-testers: Pauline
-    \item Organisations: CNRS, INRAE, IFB, I2BC, Paris Saclay University, ...
+    \item Organisations: CNRS, INRAE, IFB, I2BC, Paris Saclay University
 \end{itemize}
 \end{frame}

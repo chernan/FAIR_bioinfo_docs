@@ -1,17 +1,24 @@
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Objective}
+\frametitle{Conda setup}
 %-------------------------------------------
-%\begin{exampleblock}{We will}
-%\begin{itemize}
-%    \item 
-%\end{itemize}
-%\end{exampleblock}
-\begin{exampleblock}{Reminder}
+\begin{exampleblock}{How to access conda?}
 \begin{itemize}
-    \item We have already used (blind) conda and its strategy for defining environments!
-    \item We are now going to explain what we used before
-\end{itemize}
+    \item Conda is so used that it could even be installed by default to your machine. To test this: \verb|conda --version|
+    \item if not, may install it or got it by a docker image:
+\begin{lstlisting}
+docker run -i -t -v ${PWD}:/data continuumio/miniconda3
+\end{lstlisting}
+    \item on the IFB cluster, with modules: \verb|module load conda|
+\end{itemize} 
+\end{exampleblock}
+\begin{exampleblock}{Conda environment}
+We have already (blindly) use a conda configuration file in the workflow session:
+\begin{lstlisting}
+conda env create -n envfair -f envfair.yml
+conda activate envfair
+\end{lstlisting}
+We will next detail the content of the configuration file, \verb|envfair.yml|
 \end{exampleblock}
 \end{frame}
 %-------------------------------------------
@@ -37,29 +44,6 @@ dependencies:
   - samtools=1.10
   - subread=2.0.1
 \end{lstlisting}
-\end{exampleblock}
-\end{frame}
-%-------------------------------------------
-\begin{frame}[containsverbatim]
-\frametitle{Conda setup}
-%-------------------------------------------
-\begin{exampleblock}{How to access conda?}
-\begin{itemize}
-    \item Conda is so used that it could even be installed by default to your machine. To test this: \verb|conda --version|
-    \item if not, may install it or got it by a docker image:
-\begin{lstlisting}
-docker run -i -t -v ${PWD}:/data continuumio/miniconda3
-\end{lstlisting}
-    \item on the IFB cluster, with modules: \verb|module load conda|
-\end{itemize} 
-\end{exampleblock}
-\begin{exampleblock}{Conda environment}
-We have already use a conda configuration file in the workflow session:
-\begin{lstlisting}
-conda env create -n envfair -f envfair.yml
-conda activate envfair
-\end{lstlisting}
-We will next detail the content of the configuration file, \verb|envfair.yml|
 \end{exampleblock}
 \end{frame}
 %-------------------------------------------
@@ -97,7 +81,7 @@ Create a conda configuration file to install the snakemake tool.
 \end{exampleblock}
 \begin{exampleblock}{Hint}
 \begin{itemize}
-    \item Search the channel in the Anaconda cloud web pages
+    \item Search its channel in the Anaconda cloud web pages
     \item the "minimal" environment is sufficient
 \end{itemize}
 \end{exampleblock}
