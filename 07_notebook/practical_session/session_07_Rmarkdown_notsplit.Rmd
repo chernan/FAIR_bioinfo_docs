@@ -1,0 +1,57 @@
+---
+title: "R Markdown"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# As a first step in the analysis, we need to load a count matrix.
+# This matrix will be used by DESeq2 to perform its differential analysis, 
+# i.e. to find genes that are differentially expressed between conditions.
+# On the IFB RStudio server, data is available here: 
+# "/shared/data/projects/fair_training2020/Result/counts_matrix.txt"
+# Copy it first into your home folder, along with the R script
+counts <- read.table("./counts_matrix.txt", sep="\t", row.names="GeneId", header=TRUE)
+
+# A first look at the count matrix. We have 6 samples.
+head(counts)
+
+# Then we need to provide the experimental design so that DESeq2 
+# knows which sample groups to compare.
+sampleInfo <- data.frame(condition = c("iron", "iron", "iron", "noIron", "noIron", "noIron"),
+                         row.names = names(counts))
+sampleInfo
+
+# Next step: load the data into an object useable by DESeq2.
+library("DESeq2")
+dds <- DESeqDataSetFromMatrix(countData = counts,
+                              colData = sampleInfo,
+                              design = ~ condition)
+dds
+
+# Differential expression analysis
+# Perform the analysis by providing the data to DESeq
+dds <- DESeq(dds)
+# Extract the results
+res <- results(dds)
+# Display the results
+# Re-order by adjusted p-value
+resOrdered <- res[order(res$padj),]
+resOrdered
+
+# Display a summary of the results
+summary(resOrdered)
+
+# Display a MA plot of the dataset.
+# Statistically significant genes are displayed in red.
+plotMA(res)
+
+# Keep versions of the packages used for the analysis
+sessionInfo()
+
+```
+
