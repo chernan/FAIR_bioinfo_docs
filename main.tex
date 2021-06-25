@@ -38,7 +38,7 @@
 \column{0.6\textwidth}
 \begin{block}{Practical information:}
 \begin{itemize}
-    \item Dates: August 31st - September 2nd
+    \item Dates: June 29st - 31st
     \item Location: Institut des Systèmes Complexes, 113 rue Nationale, 75013-Paris
     \item Courses: 9:00 to 17:30
     \item Meal: 12:30-14:00
@@ -64,27 +64,29 @@
 \end{frame}
 %---------------------------------------------------------
 % Schelude
-% https://docs.google.com/document/d/11ApQxig5JAvkAsYKIbBR0SvlojPeuqoNM34g1r6P__Q/
+% https://ifb-elixirfr.github.io/IFB-FAIR-bioinfo-training/
 \begin{frame}
 \frametitle{Training schedule}
 Day 1:
 \begin{itemize}
-    \item \hyperlink{Introduction}{Introduction to \FAIRB}
-    \item \hyperlink{Encapsulation}{Encapsulation (2 Practical Sessions, \includegraphics[height=0.4cm]{shared/logo-docker-paysage.png})}
-    \item \hyperlink{Workflow}{Workflow (2 PS, \includegraphics[height=0.4cm]{shared/logo-snakemake.png})}
-    \item \hyperlink{IFB}{IFB resources (2 PS, \includegraphics[height=0.3cm]{shared/logo-singularity.png}, \includegraphics[height=0.3cm]{shared/logo-slurm.png})}
+    \item \hyperlink{Introduction}{Introduction to reproducibility}
+    \item \hyperlink{History_management}{History management (3 Practical Sessions,             \includegraphics[height=0.3cm]{shared/logo-git.png}, \includegraphics[height=0.4cm]{shared/logo-github.png})}
+    \item \hyperlink{Software_environment}{Control your development environment (1 PS, \includegraphics[height=0.2cm]{shared/logo-conda.png})}
+    \item \hyperlink{Encapsulation}{Encapsulation (2 PS, \includegraphics[height=0.4cm]{shared/logo-docker-paysage.png})}
 \end{itemize}
 Day 2:
 \begin{itemize}
-    \item \hyperlink{History_management}{History management (3 PS, \includegraphics[height=0.3cm]{shared/logo-git.png}, \includegraphics[height=0.4cm]{shared/logo-github.png})}
-    \item \hyperlink{Software_environment}{Software environment management (1 PS, \includegraphics[height=0.2cm]{shared/logo-conda.png})}
-    \item \hyperlink{Notebooks}{Traceability with notebooks (2 PS, \includegraphics[height=0.3cm]{shared/logo-jupyter.png}, \includegraphics[height=0.3cm]{shared/logo-Rmarkdown.png})}
-    \item \hyperlink{Sharing}{Sharing and disseminating (\includegraphics[height=0.4cm]{shared/logo-github.png}, \includegraphics[height=0.4cm]{shared/logo-zenodo.png})}
-    \item \hyperlink{Conclusion}{Conclusion}
+   \item \hyperlink{Workflow}{Workflow (2 PS, \includegraphics[height=0.4cm]{shared/logo-snakemake.png})}
+   \item \hyperlink{Notebooks}{Traceability with notebooks (2 PS, \includegraphics[height=0.3cm]{shared/logo-jupyter.png}, \includegraphics[height=0.3cm]{shared/logo-Rmarkdown.png})}
+   \item \hyperlink{IFB}{IFB resources (2 PS,
+   \includegraphics[height=0.3cm]{shared/logo-slurm.png},
+   \includegraphics[height=0.3cm]{shared/logo-singularity.png})}
+   \item \hyperlink{Sharing}{Sharing and disseminating (\includegraphics[height=0.4cm]{shared/logo-github.png}, \includegraphics[height=0.4cm]{shared/logo-zenodo.png})}
+   \item \hyperlink{Conclusion}{Conclusion}
 \end{itemize}
 Day 3: 
 \begin{itemize}
-    \item \hyperlink{Improvement}{Empowerment and improvement of resources (2 PE)}
+    \item \hyperlink{Improvement}{Empowerment and improvement of resources}
 \end{itemize}
 \end{frame}
 %---------------------------------------------------------
@@ -95,47 +97,49 @@ Day 3:
 %\end{frame}
 %---------------------------------------------------------
 %---------------------------------------------------------
-% Introduction
+% Introduction - Claire
 \label{Introduction}
-\section[Introduction]{Introduction to \FAIRB}
+\section[Introduction]{Introduction to reproducibility}
 \input 01_introduction/01_introduction
 %---------------------------------------------------------
-% Encapsulation
-\label{Encapsulation}
-\section[Encapsulation]{Encapsulation}
-\input 02_encapsulation/02_encapsulation
-%---------------------------------------------------------
-% Workflow
-\label{Workflow}
-\section[Pipeline]{Workflow}
-\input 03_workflow/03_workflow
-%---------------------------------------------------------
-% IFB resources
-\label{IFB}
-\section[IFB]{IFB resources}
-\input 04_IFB/04_IFB
-%---------------------------------------------------------
-% History management
+% History management - Git : Claire, GitHub : Céline
 \label{History}
 \section[History]{History management}
 \input 05_history/05_history
 %---------------------------------------------------------
-% Environment
+% Encapsulation - Céline = Cours Conda et Docker + TP Docker
+\label{Encapsulation}
+\section[Encapsulation]{Control your development environment}
+\input 02_encapsulation/02_encapsulation
+%---------------------------------------------------------
+% TP conda - Claire (avant le TP Docker)
 \label{Software_Environment}
-\section[Environment]{Software Environment}
+\section[Environment]{TP Conda}
 \input 06_environment/06_environment
 %---------------------------------------------------------
-% Notebook
+% Jour 2
+%---------------------------------------------------------
+% Workflow - Claire
+\label{Workflow}
+\section[Pipeline]{Workflow}
+\input 03_workflow/03_workflow
+%---------------------------------------------------------
+% Notebook - Céline
 \label{Notebooks}
 \section{Tracability with Notebook}
 \input 07_notebook/07_notebook
 %---------------------------------------------------------
-% Sharing
+% IFB resources - Julien/Gildas
+\label{IFB}
+\section[IFB]{IFB resources}
+\input 04_IFB/04_IFB
+%---------------------------------------------------------
+% Sharing - Céline
 \label{Sharing}
 \section{Sharing and dissemination}
 \input 08_sharing/08_sharing
 %---------------------------------------------------------
-% Conclusion
+% Conclusion - Claire
 \label{Conclusion}
 \section{Conclusion}
 \input 09_conclusion/09_conclusion

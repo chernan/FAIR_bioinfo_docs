@@ -6,8 +6,8 @@
 \begin{itemize}
     \item the rule and the workflow concepts, the snakefile
     \item how rules are linked thank to input/output files and the first rule, the target rule
-    \item how to generalize the inputs of a rule using wildcards on filenames (and the expand function)
-    \item how to redirect stdout and stderr streams (log)
+    \item how to generalize the inputs of a rule using wildcards on filenames (and the \verb|expand| function)
+    \item how to redirect \verb|stdout| and \verb|stderr| streams (log)
 \end{itemize}
 \end{block}
 \begin{block}{From now, we will seen:}
@@ -58,11 +58,11 @@ snakemake --dag | dot -Tpng > dag.png
 \frametitle{Some Snakemake options: configuration file}
 %-------------------------------------------
 \begin{block}{Why and how to use a configuration file?}
-To place all hard-coding values of the snakefile (paths, core numbers, parameters, etc)
+To place all hard-coding values of the snakefile (paths, core numbers, parameter values, etc)
 \begin{itemize}
     \item file: can be write both in yml or in json
     \item run: add Snakemake option: \verb|--configfile file.yml| or add \verb|configfile: file.yml| at the beginning of the snakefile
-    \item writing: snakefile call of defined items: \verb|config["item1"]| in input/output directive and \verb|{config[item1]}| in shell directive
+    \item code: snakefile call of defined items: \verb|config["item1"]| in input/output directive and \verb|{config[item1]}| in shell directive
 \end{itemize}
 \end{block}
 \end{frame}
@@ -88,7 +88,7 @@ Don't forget the coma after the name (left hand side, \verb|IDs| here).
 In the practical exercise we will have one conda environment for executing the whole Snakemake workflow. \\
 Snakemake also supports using explicit conda environments on a per-rule basis:
 \begin{itemize}
-    \item add the \verb|conda:| directive in the rule definition :
+    \item add a \verb|conda:| directive in the rule definition :
 \begin{lstlisting}
     conda: rule-specific-env.yml
 \end{lstlisting}

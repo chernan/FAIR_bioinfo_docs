@@ -9,43 +9,19 @@
 \begin{lstlisting}
 docker run -i -t -v ${PWD}:/data continuumio/miniconda3
 \end{lstlisting}
-    \item on the IFB cluster, with modules: \verb|module load conda|
+   \item already activated on the IFB cluster (otherwise with module: \verb|module load conda|)
 \end{itemize} 
 \end{exampleblock}
-\begin{exampleblock}{Conda environment}
-We have already (blindly) use a conda configuration file in the workflow session:
-\begin{lstlisting}
-conda env create -n envfair -f envfair.yml
-conda activate envfair
-\end{lstlisting}
-We will next detail the content of the configuration file, \verb|envfair.yml|
-\end{exampleblock}
+%\begin{exampleblock}{Conda environment}
+%We have already (blindly) use a conda configuration file in the workflow session:
+%\begin{lstlisting}
+%conda env create -n envfair -f envfair.yml
+%conda activate envfair
+%\end{lstlisting}
+%We will next detail the content of the configuration file, \verb|envfair.yml|
+%\end{exampleblock}
 \end{frame}
-%-------------------------------------------
-\begin{frame}[containsverbatim]
-\frametitle{Example of a conda configuration file}
-%-------------------------------------------
-\begin{exampleblock}{envfair.yml}
-\begin{lstlisting}[language=python]
-channels:
-  - conda-forge
-  - bioconda
-  - main
-  - default
-dependencies:
-  - python=3.7.6 # specify python version (not required but can help with downstream conflicts)
-  - snakemake-minimal=5.10.0 # workflow manager
-  - graphviz=2.42.3 # for visualisation
-  - xorg-libxrender
-  - xorg-libxpm
-  - wget=1.20.1 # for downloading files
-  - fastqc=0.11.9 # for the RNAseq analysis
-  - bowtie2=2.4.1
-  - samtools=1.10
-  - subread=2.0.1
-\end{lstlisting}
-\end{exampleblock}
-\end{frame}
+
 %-------------------------------------------
 \begin{frame}[containsverbatim]
 \frametitle{How to access tools?}
@@ -74,7 +50,7 @@ conda deactivate
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Install Snakemake}
+\frametitle{Install snakemake with conda}
 %-------------------------------------------
 \begin{exampleblock}{Objective}
 Create a conda configuration file to install the snakemake tool.
@@ -88,23 +64,48 @@ Create a conda configuration file to install the snakemake tool.
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Install Snakemake}
+\frametitle{Install snakemake with conda}
 %-------------------------------------------
-\begin{exampleblock}{condaEnvSnakemake.yml}
+\begin{exampleblock}{condaEnvSmk.yml}
 \begin{lstlisting}
 channels:
   - conda-forge
   - bioconda
   - main
 dependencies:
-  - snakemake-minimal=5.10.0
+  - snakemake-minimal=6.5.0
 \end{lstlisting}
 \end{exampleblock}
 \begin{exampleblock}{run}
 \begin{lstlisting}
-conda create env -n condaEnvSnakemake -f condaEnvSnakemake.yml
-conda activate condaEnvSnakemake
-snakemake ...
+conda env create -n condaEnvSmk -f condaEnvSmk.yml
+conda activate condaEnvSmk
+snakemake --version
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}
+%-------------------------------------------
+%\begin{frame}[containsverbatim]
+%\frametitle{Example of a conda configuration file}
+%-------------------------------------------
+%\begin{exampleblock}{envfair.yml}
+%\begin{lstlisting}[language=python]
+%channels:
+%  - conda-forge
+%  - bioconda
+%  - main
+%  - default
+%dependencies:
+%  - python=3.7.6 # specify python version (not required but can help with downstream conflicts)
+%  - snakemake-minimal=5.10.0 # workflow manager
+%  - graphviz=2.42.3 # for visualisation
+%  - xorg-libxrender
+%  - xorg-libxpm
+%  - wget=1.20.1 # for downloading files
+%  - fastqc=0.11.9 # for the RNAseq analysis
+%  - bowtie2=2.4.1
+%  - samtools=1.10
+%  - subread=2.0.1
+%\end{lstlisting}
+%\end{exampleblock}
+%\end{frame}

@@ -108,15 +108,15 @@ For determining whether output files have to be re-created, Snakemake checks whe
 \begin{frame}[containsverbatim]
 \frametitle{Generalization with wilcards}
 %-------------------------------------------
-Wildcards (Snakemake key feature) allow to replace hardcoded filenames and make input and output directives flexible. Using them will:
-\begin{itemize}
-\item reduce the amount of code needed
-\item have the workflow work on new data, without modification
-\end{itemize}
-\vfill
-In the filename, wildcards (writing into \verb|{}|) are automatically resolved (replaced by regular expression \verb|".+"|). All filenames matching the expression are concerning by the directive.
-%write \verb|{wildcard_name}| in \verb|input:| or \verb|output:| directives and \verb|{wildcards.wildcard_name}| elsewhere.
-Wildcards are specific to the rule, a same file can be accessed by different matching. :
+Wildcards (Snakemake key feature) allow to replace part of filenames to reduce hardcoding. 
+Using them will have the workflow work on new data, without modification. 
+Input and output directives will be more flexible. 
+
+In the filename, wildcards (writing into \verb|{}|) are automatically resolved
+(ie. replaced by regular expression \verb|".+"|). 
+All filenames matching the expression are concerning by the directive. 
+Wildcards are specific to a rule, a same file can be accessed by different matching:
+
 \begin{block}{Ex. with the file "101$/$file.A.txt"}
 \begin{lstlisting}
 rule one: output: "{set}1/file.{grp}.txt" => set=10, grp=A
@@ -213,5 +213,5 @@ conda activate smk-env ; snakemake ...         #run
 module load snakemake ; snakemake ...           #run
 \end{lstlisting}
 \end{block}
-check access by replacing \verb|...| by \verb|--version|
+check run: replace \verb|...| by \verb|--version|
 \end{frame}

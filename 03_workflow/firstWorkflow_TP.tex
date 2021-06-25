@@ -8,10 +8,32 @@ For this practical exercise on Snakemake we will:
     \item access to snakemake by the way of a docker container
     \item access to analysis tools by the way of a conda environment (details about conda will be seen after)
     \item create a first snakefile with one rule
-    \item add a second rule to create the first workflow
+    \item add a second rule to create a first workflow
 \end{itemize}
 During this first exercise, we will execute several cycles: executing snakemake, observing the result and improving the code. Each code version will be noted \verb|ex1_oX.smk| with X a progressive digit.
 \end{exampleblock}
+\end{frame}
+%-------------------------------------------
+\begin{frame}
+\frametitle{Practical exercise}
+%-------------------------------------------
+\begin{columns}
+ \column{0.35\textwidth}
+ The final objective is to create a snakefile to manage this small workflow:
+   \begin{exampleblock}{a small workflow}
+   \begin{center}
+       \includegraphics[width=3.5cm]{03_workflow/images/FAIR_WF_2steps.png}
+   \end{center}
+   \end{exampleblock}
+
+ \column{0.55\textwidth}
+   \begin{exampleblock}{Input data}
+    The input data, the RNASeq reads, may be downloaded from: \url{https://zenodo.org/record/3997237}
+    \begin{center}
+        \includegraphics[width=5cm]{03_workflow/images/FAIR_data_zenodo.png}
+    \end{center}
+   \end{exampleblock}
+\end{columns}
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
@@ -23,15 +45,8 @@ We will access to Snakemake by running a docker image containing the conda tool 
 docker run -i -t -v ${PWD}:/data continuumio/miniconda3
 \end{lstlisting}
 \end{exampleblock}
-
-%\begin{exampleblock}{docker from NBIS courses (conda 4.6.14 + git 2.7.4)}
-%\begin{lstlisting}
-%sudo docker run -it -p 8888:8888 -v ${PWD}:/course/ scilifelablts/reproducible_research_course_slim
-%\end{lstlisting}
-%\end{exampleblock}
-
+And, we will access to the analysis tools thanks to a conda environment, \verb|envfair.yml| (cf. next slide), designed for this small workflow:
 \begin{exampleblock}{Conda environment}
-And, we will access to the analysis tools thanks to a conda environment, \verb|envfair.yml| (cf. next slide), designed for this exercise:
 \begin{lstlisting}
 conda env create -n envfair -f envfair.yml
 conda activate envfair
@@ -47,19 +62,11 @@ conda activate envfair
 channels:
   - conda-forge
   - bioconda
-  - main
   - default
 dependencies:
-  - python=3.7.6 # specify python version (not required but can help with downstream conflicts)
-  - snakemake-minimal=5.10.0 # workflow manager
-  - graphviz=2.42.3 # for visualisation
-  - xorg-libxrender
-  - xorg-libxpm
-  - wget=1.20.1 # for downloading files
-  - fastqc=0.11.9 # for the RNAseq analysis
-  - bowtie2=2.4.1
-  - samtools=1.10
-  - subread=2.0.1
+  - snakemake-minimal=6.5.0 # workflow manager
+  - fastqc=0.11.9 # a quality control tool for fastq data (java)
+  - multiqc=1.9 # an R package to aggregate reports
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}
@@ -74,8 +81,8 @@ Create a snakemake file named \verb|ex1_o1.smk| including the first step of the 
 \begin{itemize}
     \item input file: \verb|SRR3099585_chr18.fastq.gz| in a local directory of yours
     \item fastqc access: by running \verb|docker miniconda3| + activate the conda \verb|envfair| environment
-    \item fastqc command: \verb|fastqc inputFileName --outdir ResultDirectory|
-    \item the 2 fastqc result files (.zip $\&$ .html) are named based on the prefix of input file
+    \item fastqc command: \verb|fastqc inputFileName --outdir FastQCResultDirectory|
+    \item the 2 fastqc result files (\verb|*_fastqc.zip| \& \verb|*_fastqc.html|) will be located in the fastqc result directory and will be named based on the prefix of input file (eg. \verb|SRR3099585_chr18_fastqc.zip|)
 \end{itemize}
 \end{exampleblock}
 \end{frame}
@@ -83,10 +90,6 @@ Create a snakemake file named \verb|ex1_o1.smk| including the first step of the 
 \begin{frame}[containsverbatim]
 \frametitle{Solution}
 %-------------------------------------------
-% biocontainers/fastqc ne fonctionne pas 
-% (malgré les +50k download et maj 2 mois):
-% - pas de version latest, obligation de spécifier le tag v0.11.9_cv6 (cv5 ne fonctionne pas non plus)
-% choix pegi3s/fastqc qui est mieux documenté (mais maj 5 mois)
 \begin{exampleblock}{ex1$\_$o1.smk}
 \begin{lstlisting}[language=python]
 rule fastqc:
@@ -100,11 +103,11 @@ rule fastqc:
 \end{exampleblock}
 \begin{exampleblock}{Snakemake run}
 \begin{lstlisting}[language=python]
-snakemake --snakefile ex1_o1.smk
+snakemake --cores 1 --snakefile ex1_o1.smk
 \end{lstlisting}
 \end{exampleblock}
 \begin{exampleblock}{Observe result}
-Look at the newly created \verb|FastQC| directory: Snakemake create needed directories.
+Look at the newly created \verb|FastQC| directory: Snakemake create alone the needed directories.
 \end{exampleblock}
 \end{frame}
 %-------------------------------------------
@@ -117,6 +120,7 @@ Add a second input RNAseq file to the rule
 \begin{exampleblock}{Hint}
 \begin{itemize}
     \item input file: \verb|SRR3099586_chr18.fastq.gz| in a local directory of yours
+    \item don't forget the output files
 \end{itemize}
 \end{exampleblock}
 \end{frame}
@@ -140,8 +144,8 @@ rule fastqc:
 \end{exampleblock}
 \begin{exampleblock}{Snakemake run}
 \begin{lstlisting}[language=python]
-# -s is the short form of the --snakefile option
-snakemake -s ex1_o2.smk
+snakemake -c1 -s ex1_o2.smk
+# -s & -c: short forms of the --snakefile & --cores options
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}
@@ -150,10 +154,19 @@ snakemake -s ex1_o2.smk
 \frametitle{Solution}
 %-------------------------------------------
 \begin{exampleblock}{Observe result}
-Why does Snakemake reply \verb|"Nothing to be done"|?\\
-Two solutions:\begin{itemize}
-\item delete the FastQC directory (\verb|rm -Rf FastQC|) and rerun the snakemake command
-\item use the Snakemake \verb|--forcerules| (\verb|-R|) option: \verb|snakemake -s ex1_o2.smk -R fastqc|
+Snakemake run the fastqc tool only for the 2nd input file added. 
+\end{exampleblock}
+
+\begin{exampleblock}{Run again}
+Run again the snakemake command: \verb|snakemake -c1 -s ex1_o2.smk|\\
+
+Why does Snakemake reply \verb|"Nothing to be done"|?
+\end{exampleblock}
+
+\begin{exampleblock}{Solutions}
+\begin{itemize}
+   \item delete the FastQC directory (\verb|rm -Rf FastQC|) and rerun the snakemake command
+   \item use the Snakemake \verb|--forcerules| (\verb|-R|) option: \verb|snakemake -c1 -s ex1_o2.smk -R fastqc|
 \end{itemize}
 \end{exampleblock}
 \end{frame}
@@ -180,7 +193,7 @@ Use the \verb|expand()| function to manage all the input RNAseq files at once.
 %-------------------------------------------
 \begin{exampleblock}{ex1$\_$o3.smk}
 \begin{lstlisting}[language=python]
-SAMPLES = ["SRR3099585_chr18","SRR3099586_chr18","SRR3099587_chr18"] # add others samples
+SAMPLES = ["SRR3099585_chr18","SRR3099586_chr18","SRR3099587_chr18"] # add all 6 samples
 
 rule fastqc:
   output:
@@ -194,7 +207,7 @@ rule fastqc:
 \begin{exampleblock}{Snakemake run}
 \begin{lstlisting}[language=python]
 rm -Rf FastQC/
-snakemake -s ex1_o3.smk
+snakemake -c1 -s ex1_o3.smk
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}
@@ -203,14 +216,14 @@ snakemake -s ex1_o3.smk
 \frametitle{Add a second rule}
 %-----------------------------------------------
 \begin{exampleblock}{Objective 4}
-Add a second rule, this will start a workflow. \\
-The second rule concerns the creation of an index file for the genome sequence (needed for the mapping step). As the mapping tool is bowtie2, the index creation tool is bowtie2-build.
+Add a second rule: this will start a workflow. \\
+The second tool/rule will aggregate all the fastqc results thank to the R multiqc tool. 
 \end{exampleblock}
 \begin{exampleblock}{Hint}
 \begin{itemize}
-    \item genome file (input): \verb|Data/O.tauri_genome.fna|
-    \item use a Python list and the \verb|expand()| function to manage the 6 index files names that will be created by the command: "*.1.bt2" ... "*.4.bt2","*.rev.1.bt2","*.rev.2.bt2"
-    \item command: \verb|bowtie2-build genomeSequenceAccess indexAccessPrefix|
+    \item inputs: the fastqc zip files
+    \item command: \verb|multiqc FastQCResultDirectory|
+    \item 2 outputs: a file \verb|multiqc_report.html| \& a repository \verb|multiqc_data|
 \end{itemize}
 \end{exampleblock}
 \end{frame}
@@ -221,14 +234,6 @@ The second rule concerns the creation of an index file for the genome sequence (
 \begin{exampleblock}{ex1$\_$o4.smk (copy, run)}
 \begin{lstlisting}[language=python]
 SAMPLES = ["SRR3099585_chr18","SRR3099586_chr18","SRR3099587_chr18"]
-BIDX = ["1","2","3","4","rev.1","rev.2"]
-
-rule genome_bwt2_index:
-  output:
-    expand("Tmp/Otauri.{ext}.bt2", ext=BIDX)
-  input:
-    "Data/O.tauri_genome.fna"
-  shell: "bowtie2-build {input} Tmp/Otauri"
 
 rule fastqc:
   output:
@@ -237,11 +242,19 @@ rule fastqc:
   input:
     expand("Data/{sample}.fastq.gz", sample = SAMPLES)
   shell: "fastqc --outdir FastQC/ {input}"
+
+rule multiqc:
+  output:
+    "multiqc_report.html",
+    directory("multiqc_data")
+  input:
+    expand("FastQC/{sample}_fastqc.zip", sample = SAMPLES)
+  shell: "multiqc {input}"
 \end{lstlisting}
 \end{exampleblock}
 %\begin{exampleblock}{Snakemake run}
 %\begin{lstlisting}[language=python]
-%snakemake -s ex1_o4.smk
+%snakemake -c1 -s ex1_o4.smk
 %\end{lstlisting}
 %\end{exampleblock}
 \end{frame}
@@ -254,8 +267,12 @@ Does Snakemake do the job?\\
 Why wasn't the fastqc command launched?\\
 \end{exampleblock}
 \begin{exampleblock}{rule links}
-Snakemake run the first rule and stop when the target files are present. Also, there is no link between the 2 rules because they concern two independent parts of the analysis.\\
-The solution is to add a rule that aggregate this 2 parts of the workflow.
+Snakemake run the first rule (fastqc) and stop when the target files are present. \\
+Solutions ?\begin{itemize}
+    \item put the multiqc rule before the fastqc rule
+    \item add a rule that aggregate all the rules of the workflow
+\end{itemize} 
+Adding a new rule is the choice (could be no link between the rules)
 \end{exampleblock}
 \end{frame}
 %-------------------------------------------
@@ -263,7 +280,7 @@ The solution is to add a rule that aggregate this 2 parts of the workflow.
 \frametitle{The target rule}
 %-------------------------------------------
 \begin{exampleblock}{Objective 5}
-Add a "first" rule (rule all, target, ...) with the expected results for the 2 rules (\verb|fastqc| and \verb|genome_bwt2_index| in its \verb|input:| directive.
+Add a "first" rule (named "all", "target", ...) with the expected results for all the rules in its \verb|input:| directive.
 \end{exampleblock}
 \end{frame}
 %-------------------------------------------
@@ -273,18 +290,17 @@ Add a "first" rule (rule all, target, ...) with the expected results for the 2 r
 \begin{exampleblock}{ex1$\_$o5.smk}
 \begin{lstlisting}
 ...
-
 rule all:
   input:
     expand("FastQC/{sample}_fastqc.html", sample=SAMPLES),
-    expand("Tmp/Otauri.{ext}.bt2", ext=BIDX)
-
+    "multiqc_report.html",
+    directory("multiqc_data")
 ...
 \end{lstlisting}
 \end{exampleblock}
 \begin{exampleblock}{Snakemake run}
 \begin{lstlisting}[language=python]
-snakemake -s ex1_o5.smk -R all fastqc
+snakemake -c1 -s ex1_o5.smk -R fastqc
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}
@@ -331,7 +347,7 @@ rule fastqc:
 \end{exampleblock}
 \begin{exampleblock}{Snakemake run}
 \begin{lstlisting}[language=python]
-snakemake -s ex1_o6.smk -R all fastqc
+snakemake -c1 -s ex1_o6.smk -R fastqc
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}
@@ -339,15 +355,20 @@ snakemake -s ex1_o6.smk -R all fastqc
 \begin{frame}[containsverbatim]
 \frametitle{Solution}
 %-------------------------------------------
-
 \begin{exampleblock}{Observe result}
 Now Snakemake did many fastqc jobs:
 \begin{center}
     \includegraphics[width=6cm]{03_workflow/images/FAIR_ex1_o6_smk.png}
 \end{center}
-But what happens to the runtime displays on the screen?\\
+\end{exampleblock}
+\begin{exampleblock}{Parallelize}
+Rerun with more than one core: 
+\begin{lstlisting}[language=python]
+snakemake -c3 -s ex1_o6.smk -R fastqc
+\end{lstlisting}
+What happens now to the runtime displays on the screen?\\
 
-To correct this, we will move the displays to a log file specific for each rule and each input file.
+To correct the mixture, we will move the displays to a log file specific for each rule and each input file.
 \end{exampleblock}
 \end{frame}
 %-------------------------------------------
@@ -355,12 +376,11 @@ To correct this, we will move the displays to a log file specific for each rule 
 \frametitle{Adding log file}
 %-------------------------------------------
 \begin{exampleblock}{Objective 7}
-In Unix systems, the output of a command is usually sent to two separate streams: the normal output: to Standard Out (stdout also "\verb|>|" in shell), and error messages: to Standard Error (stderr, or "\verb|2>|" in shell). To integrate stderr into the same log file as the stdout can be use "\verb|&>|" instead of "\verb|>|": \\ 
-shell: ...  \verb|&> {log}|", but use with care when output files are printed to stdout (as often in shell comands).\\
-Redirect the stdout and stderr streams of the \verb|fastqc| and bowtie2-build commands. \\
+In Unix systems, the output of a command is usually sent to 2 separate streams: the expected output to Standard Out (stdout, or "\verb|>|"), and the error messages to Standard Error (stderr, or "\verb|2>|"). \\
+To integrate stderr and stdout into the same log, use "\verb|&>|". But use it with care because output files are often printed to stdout.
 \end{exampleblock}
 \begin{exampleblock}{Hint}
-For the \verb|bowtie2-build| and \verb|fastqc| rules, add the \verb|log:| directive with two variables (\verb|log1| and \verb|log2|) to redirect each streams.
+Redirect the stdout and stderr streams of the \verb|fastqc| and \verb|multiqc|  rules by adding a "\verb|log:|" directive with two variables, \verb|out| and \verb|err| to separately redirect each streams.
 \end{exampleblock}
 \end{frame}
 %-----------------------------------------------
@@ -369,11 +389,11 @@ For the \verb|bowtie2-build| and \verb|fastqc| rules, add the \verb|log:| direct
 %-------------------------------------------
 \begin{exampleblock}{ex1$\_$o7.smk}
 \begin{lstlisting}[language=python]
-# in rule genome_bwt2_index:
+# in rule multiqc:
   log:
-    log1="Logs/genome_bwt2_index.log1",
-    log2="Logs/genome_bwt2_index.log2"
-  shell: "bowtie2-build {input} Tmp/Otauri 1>{log.log1} 2>{log.log2}"
+    out="Logs/multiqc.std",
+    err="Logs/multiqc.err"
+  shell: "multiqc {input} 1>{log.std} 2>{log.err}"
 # in rule fastqc:
   log:
     log1="Logs/{sample}_fastqc.log1",
@@ -383,7 +403,7 @@ For the \verb|bowtie2-build| and \verb|fastqc| rules, add the \verb|log:| direct
 \end{exampleblock}
 \begin{exampleblock}{Snakemake run}
 \begin{lstlisting}[language=python]
-rm -Rf FastQC/ Tmp/ Logs/; snakemake -s ex1_o7.smk
+snakemake -c1 -s ex1_o7.smk -R fastqc
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}

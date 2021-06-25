@@ -1,6 +1,17 @@
 %------------------------------------------------------------
 \subsection{Introduction}
 
+%------------------------------------------------------------
+\begin{frame}{Introduction}
+
+\begin{center}
+A (not-so-uncommon) nightmare
+
+\includegraphics[width=12cm]{02_encapsulation/figures/nightmare_v2-1.pdf}
+
+\end{center}
+
+\end{frame}
 
 %------------------------------------------------------------
 \begin{frame}{Introduction}
@@ -8,23 +19,61 @@
 \begin{center}
 A (not-so-uncommon) nightmare
 
-\includegraphics[width=12cm]{02_encapsulation/figures/nightmare.pdf}
+\includegraphics[width=12cm]{02_encapsulation/figures/nightmare_v2-2.pdf}
+
+\end{center}
+
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}{Introduction}
+
+\begin{center}
+A (not-so-uncommon) nightmare
+
+\includegraphics[width=12cm]{02_encapsulation/figures/nightmare_v2-3.pdf}
+
+\end{center}
+
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}{Introduction}
+
+\begin{center}
+A (not-so-uncommon) nightmare
+
+\includegraphics[width=5cm]{02_encapsulation/figures/nightmare_v2-3.pdf}
 
 What changed?
-\end{center} \pause
+\end{center}
 
+\begin{columns}
+
+\column{0.5\textwidth}
 \begin{itemize}
-  \item Software version
-  \item Libraries version
+  \item Package
+  \item Software
+  \item Libraries
+  \item Environment variables
+\end{itemize}
+
+
+\column{0.5\textwidth}
+\begin{itemize}
   \item OS version
+  \item Computer
   \item ..?
 \end{itemize}
+
+\end{columns}
+
 
 \end{frame}
 
 
 %------------------------------------------------------------
-\subsection{Different levels of encapsulation}
+\subsection{Encapsulation}
 
 %------------------------------------------------------------
 \begin{frame}{Different levels of encapsulation}
@@ -43,9 +92,9 @@ Goal : capture the system environment of applications (OS, packages, libraries,�
 %------------------------------------------------------------
 \begin{frame}{Encapsulation}
 
-Let's say we want to install Firefox...
+Let's say we want to install RStudio...
 
-\includegraphics[width=12cm]{02_encapsulation/figures/install_firefox.pdf}
+\includegraphics[width=12cm]{02_encapsulation/figures/install_R_v2.pdf}
 
 
 \end{frame}
@@ -55,7 +104,7 @@ Let's say we want to install Firefox...
 \begin{columns}
 
 \column{0.5\textwidth}
-\includegraphics[width=6cm]{02_encapsulation/figures/intro_host_49.pdf}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-0.pdf}
 
 \column{0.5\textwidth}
 We started with a computer using a specific OS...
@@ -67,7 +116,7 @@ We started with a computer using a specific OS...
 \begin{columns}
 
 \column{0.5\textwidth}
-\includegraphics[width=6cm]{02_encapsulation/figures/intro_1_app_nolib_50.pdf}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-1.pdf}
 
 \column{0.5\textwidth}
 We started with a computer using a specific OS...
@@ -82,7 +131,7 @@ And inside this environment, we installed a new application.
 \begin{columns}
 
 \column{0.5\textwidth}
-\includegraphics[width=6cm]{02_encapsulation/figures/intro_1_app_51.pdf}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-2.pdf}
 
 \column{0.5\textwidth}
 We started with a computer using a specific OS...
@@ -101,7 +150,7 @@ Applications rely on dependencies, e.g. external libraries.
 \begin{columns}
 
 \column{0.5\textwidth}
-\includegraphics[width=6cm]{02_encapsulation/figures/intro_2_app_versions_53.pdf}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-3.pdf}
 
 \column{0.5\textwidth}
 Usually dependencies of different applications don’t interfere.
@@ -114,11 +163,72 @@ There might be conflicts…
 \end{frame}
 
 %------------------------------------------------------------
+\begin{frame}{Encapsulation}
+\begin{columns}
+
+\column{0.5\textwidth}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-4.pdf}
+
+\column{0.5\textwidth}
+Usually dependencies of different applications don’t interfere.
+
+
+But what if we want to test the latest version of our favourite tool?
+There might be conflicts…
+
+\end{columns}
+\end{frame}
+
+
+%------------------------------------------------------------
+\begin{frame}{Encapsulation : managing environments}
+\begin{columns}
+
+\column{0.5\textwidth}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-5.pdf}
+
+\column{0.5\textwidth}
+Idea : create separated environments for each application.
+
+\includegraphics[width=3.5cm]{shared/logo-conda.png}
+
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}{Encapsulation : managing environments}
+\begin{columns}
+
+\column{0.5\textwidth}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-6.pdf}
+
+\column{0.5\textwidth}
+Idea : create separated environments for each application.
+
+More versatile: create a new environment per analysis.
+\end{columns}
+\end{frame}
+
+
+%------------------------------------------------------------
 \begin{frame}{Encapsulation : hardware virtualisation}
 \begin{columns}
 
 \column{0.5\textwidth}
-\includegraphics[width=6cm]{02_encapsulation/figures/intro_hardware_virtualisation_54.pdf}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-7.pdf}
+
+\column{0.5\textwidth}
+But what if we want to install a software from a different OS?
+
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}{Encapsulation : hardware virtualisation}
+\begin{columns}
+
+\column{0.5\textwidth}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-8.pdf}
 
 \column{0.5\textwidth}
 Idea: use virtual machines
@@ -144,7 +254,7 @@ Pros:
 \begin{columns}
 
 \column{0.5\textwidth}
-\includegraphics[width=6cm]{02_encapsulation/figures/intro_hardware_virtualisation_54.pdf}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-8.pdf}
 
 \column{0.5\textwidth}
 Idea: use virtual machines
@@ -166,12 +276,10 @@ Cons:
 \begin{columns}
 
 \column{0.5\textwidth}
-\includegraphics[width=6cm]{02_encapsulation/figures/intro_os_virtualisation_59.pdf}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-9.pdf}
 
 \column{0.5\textwidth}
-Idea: "trick" applications into believing that they are in a different OS than the host's
-
-Avoid redundancy.
+ 
 
 \end{columns}
 \end{frame}
@@ -181,20 +289,118 @@ Avoid redundancy.
 \begin{columns}
 
 \column{0.5\textwidth}
-\includegraphics[width=6cm]{02_encapsulation/figures/intro_docker_60.pdf}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-10.pdf}
 
 \column{0.5\textwidth}
 Idea: "trick" applications into believing that they are in a different OS than the host's
 
 Avoid redundancy.
 
-\logoDockerPortrait
+\includegraphics[width=3.5cm]{shared/logo-docker-portrait.png}
 
 \end{columns}
 \end{frame}
 
 %------------------------------------------------------------
 \begin{frame}{Encapsulation : OS virtualisation}
+\begin{columns}
+
+\column{0.5\textwidth}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-10.pdf}
+
+\column{0.5\textwidth}
+OS virtualisation vs hardware virtualisation
+
+Pros:
+\begin{itemize}
+  \item Speed 
+  \begin{itemize}
+    \item Installation is faster
+    \item No boot time
+  \end{itemize}
+  \item Lightweight
+  \begin{itemize}
+    \item Minimal base OS
+    \item Minimal libraries and application set
+  \end{itemize}
+  \item Easy sharing of applications
+\end{itemize}
+
+\end{columns}
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}{Encapsulation : OS virtualisation}
+\begin{columns}
+
+\column{0.5\textwidth}
+\includegraphics[width=6cm]{02_encapsulation/figures/intro_encapsulation_v2-10.pdf}
+
+\column{0.5\textwidth}
+
+Cons:
+\begin{itemize}
+  \item Singularity to use images on a cluster
+  \item Changes of policies of the Docker company
+\end{itemize}
+
+\end{columns}
+\end{frame}
+
+
+%------------------------------------------------------------
+\begin{frame}{Docker policy}
+
+\centering Update of the Docker Image retention policy (13/08/2020)
+
+\includegraphics[width=7cm]{02_encapsulation/images/docker_image_retention_policy.png}
+
+https://www.docker.com/pricing/retentionfaq
+
+\end{frame}
+
+%------------------------------------------------------------
+\begin{frame}{Encapsulation}
+\begin{columns}
+
+\column{0.3\textwidth}
+\begin{center}
+    \includegraphics[width=3.5cm]{02_encapsulation/figures/intro_encapsulation_v2-5.pdf}
+\end{center}
+
+\column{0.3\textwidth}
+\begin{center}
+\includegraphics[width=3.5cm]{02_encapsulation/figures/intro_encapsulation_v2-10.pdf}
+\end{center}
+
+\column{0.3\textwidth}
+\begin{center}
+    \includegraphics[width=3.5cm]{02_encapsulation/figures/intro_encapsulation_v2-8.pdf}
+\end{center}
+
+\end{columns}
+\begin{columns}
+
+\column{0.3\textwidth}
+\begin{center}
+    \includegraphics[width=2.5cm]{shared/logo-conda.png}
+\end{center}
+
+\column{0.3\textwidth}
+\begin{center}
+    \includegraphics[width=2.5cm]{shared/logo-docker-portrait.png}
+\end{center}
+
+\column{0.3\textwidth}
+
+
+\end{columns}
+
+\end{frame}
+
+
+%------------------------------------------------------------
+\begin{frame}{Encapsulation and reproducibility stack}
 
 \centering\includegraphics[width=12cm]{02_encapsulation/images/encapsulation_reproducibility_scale.png}
 
@@ -202,9 +408,17 @@ Practical Computational Reproducibility in the Life Sciences - Björn Grüning e
 
 \end{frame}
 
+%------------------------------------------------------------
+\subsection{The Conda stack}
+\input{06_environment/06_environment}
 
 %------------------------------------------------------------
 \subsection{What is Docker?}
+
+%-------------------------------------------
+\begin{frame}{}
+    \huge{Docker}
+\end{frame}
 
 %------------------------------------------------------------
 \begin{frame}{What is Docker?}
@@ -303,7 +517,7 @@ Be critical!
 
 \centering\includegraphics[width=12cm]{02_encapsulation/images/docker_architecture.pdf}
 
-(\url{https://docs.docker.com/get-started/overview/})
+(https://docs.docker.com/get-started/overview/)
 \end{frame}
 
 %------------------------------------------------------------
@@ -323,73 +537,22 @@ Other commands :
 
 \end{frame}
 
-%------------------------------------------------------------
-\begin{frame}{Encapsulation : OS virtualisation}
-\begin{columns}
-
-\column{0.5\textwidth}
-\includegraphics[width=6cm]{02_encapsulation/figures/intro_docker_60.pdf}
-
-\column{0.5\textwidth}
-OS virtualisation vs hardware virtualisation
-
-Pros:
-\begin{itemize}
-  \item Speed 
-  \begin{itemize}
-    \item Installation is faster
-    \item No boot time
-  \end{itemize}
-  \item Lightweight
-  \begin{itemize}
-    \item Minimal base OS
-    \item Minimal libraries and application set
-  \end{itemize}
-  \item Easy sharing of applications
-\end{itemize}
-
-\end{columns}
-\end{frame}
-
-%------------------------------------------------------------
-\begin{frame}{Encapsulation : OS virtualisation}
-\begin{columns}
-
-\column{0.5\textwidth}
-\includegraphics[width=6cm]{02_encapsulation/figures/intro_docker_60.pdf}
-
-\column{0.5\textwidth}
-
-Cons:
-\begin{itemize}
-  \item Needs root access (Singularity)
-  \item Changes of policies of the Docker company
-\end{itemize}
-
-\end{columns}
-\end{frame}
-
-
-%------------------------------------------------------------
-\begin{frame}{Docker policy}
-
-\centering Update of the Docker Image retention policy (13/08/2020)
-
-\includegraphics[width=7cm]{02_encapsulation/images/docker_image_retention_policy.png}
-
-https://www.docker.com/pricing/retentionfaq
-
-\end{frame}
 
 %------------------------------------------------------------
 \subsection{Practical session}
 
-%-------------------------------------------
+%------------------------------------------------------------
 \begin{frame}{Practical session}
+Savoir FAIRe
 
-Practical session : Docker and Samtools.
+\begin{itemize}
+  \item (Installation de Docker)
+  \item 1. Use a pre-defined image available on the DockerHub
+  \item 2. Adapt an image to your needs
+  \item 3. Build an image with a Dockerfile
+\end{itemize}
 
-See companion document.
+Practical session : Docker and FastQC. See companion document.
 
 \end{frame}
 
@@ -409,19 +572,6 @@ green=input, blue=tool
     \item[DEseq2] statistical analysis: genes list having differential expression
 \end{description}
 }
-\end{frame}
-
-%------------------------------------------------------------
-\begin{frame}{Practical session}
-Savoir FAIRe
-
-\begin{itemize}
-  \item (Installation de Docker)
-  \item Learn the structure of a Docker command
-  \item Pull a pre-defined image available on the DockerHub
-  \item Start a container
-  \item Bonus: build a Dockerfile
-\end{itemize}
 \end{frame}
 
 %------------------------------------------------------------

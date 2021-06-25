@@ -9,7 +9,7 @@
 %----------------------------------------
 \begin{frame}{\includegraphics[height=0.5cm]{shared/logo-conda.png}: an environment manager}
 %----------------------------------------
-\begin{block}{Conda concepts, objetcs}
+\begin{block}{Conda definitions}
     \begin{itemize}
         \item Environment: a set of packages/tools in a directory (added to our PATH)
         \item Conda: an open source package + a general-purpose environment management system (installation, execution, upgrade). For any programming language, multi-platform (Windows, MacOS, Linux).
@@ -43,22 +43,42 @@
 \end{block}
 \end{frame}
 %----------------------------------------
-\begin{frame}{\includegraphics[height=0.5cm]{shared/logo-conda.png} About channels}
+\begin{frame}[containsverbatim]
+{\includegraphics[height=0.5cm]{shared/logo-conda.png} About channels}
 %----------------------------------------
 \begin{block}{Some conda channels}
 \begin{itemize}
-    \item defaults
-    \item bioconda: bioinformaticians contributions
-    \item conda-forge: many popular python packages (analogous to PyPI but with a unified, automated build infrastructure and more peer review of recipes)
-    \item r: for packages in R language
+    \item \verb|default|
+    \item \verb|conda-forge|: many popular python packages (analogous to PyPI but with a unified, automated build infrastructure and more peer review of recipes)
+    \item \verb|bioconda|: bioinformaticians' contributions
+    \item private
 \end{itemize}
-
 \end{block}
+
 \begin{block}{Channels list order}
 \begin{itemize}
     \item when different channels have the same package $\Rightarrow$ collisions
     \item collisions resolved following the order of your channels list $\Rightarrow$ put supplemental channels at the bottom of your channel list
 \end{itemize}
+\end{block}
+\end{frame}
+%----------------------------------------
+\begin{frame}[containsverbatim]
+{\includegraphics[height=0.5cm]{shared/logo-conda.png} R, mamba}
+%----------------------------------------
+\begin{block}{Conda and R}
+    The R interpreter is included in the \verb|r-essentials| package (~200 r packages).
+    Add \verb|r-| before the regular r package name (eg. \verb|r-ggplot2|)
+    \begin{center}
+        \includegraphics[height=3cm]{06_environment/Images/conda_Ressentials.png}
+    \end{center}
+\end{block}
+\begin{block}{Mamba}
+A fast drop-in alternative to conda, using libsolv for dependency resolution
+\begin{lstlisting}[language=python]
+conda install -c conda-forge mamba
+\end{lstlisting}
+Next, replace \verb|conda| by \verb|mamba| to use it
 \end{block}
 \end{frame}
 %----------------------------------------
@@ -70,15 +90,15 @@
 conda create env -n myenv # creation of a conda environment 
 conda info --envs # list environments (* for the active one) 
 conda activate myenv # active the myenv environment
-conda deactivate # inactivate the environment
 conda list # list packages (only in an active environment)
 conda install package # installation of a tool/package
 conda remove package # suppress the tool from the environment
 conda env remove -n myenv # suppress the myenv environment
+conda deactivate # inactivate the environment
 \end{lstlisting}
 \end{block}
 \begin{block}{miniconda3}
-With the miniconda3 distribution and by default, environments are installed in a miniconda3/envs/ repository
+With the miniconda3 distribution and by default, environments are installed in a \verb|miniconda3/envs/| repository
 \end{block}
 \end{frame}
 %----------------------------------------
@@ -94,7 +114,7 @@ With the miniconda3 distribution and by default, environments are installed in a
 \end{block}
 \begin{block}{configuration file}
 \begin{itemize}
-    \item list all conda packages in a configuration file (yaml or json format)
+    \item list all conda packages in a configuration file (\verb|yaml| or \verb|json| format)
     \item create the environment based on the configuration file (option \verb|-f|)
     \item activate the environment
 \end{itemize}
