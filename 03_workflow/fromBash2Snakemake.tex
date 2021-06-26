@@ -10,11 +10,12 @@
     \item how to redirect \verb|stdout| and \verb|stderr| streams (log)
 \end{itemize}
 \end{block}
-\begin{block}{From now, we will seen:}
+\begin{block}{From now, we will seen some snakemake options:}
 \begin{itemize}
-    \item some snakemake options: to visualize the workflow diagram, use a dry-run option, etc
     \item adding a configuration file
     \item getting file names from the file system
+    \item use a conda environment
+    \item to visualize the workflow diagram, use a dry-run option, etc
     %\item \alert{the container directive ???}
     %\item \alert{how to run snakemake on cluster ???}
 \end{itemize}
@@ -22,63 +23,53 @@
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Snakemake DAG visualization}
+\frametitle{Using a configuration file}
 %-------------------------------------------
-\begin{block}{}
-Snakemake use Graphviz (\verb|dot| command) to create graphical visualisations, for the complete workflow (\verb|--dag|) or for the rules dependencies (\verb|--rulegraph|):
+Why use a configuration file?\\
+To place all hard-coding values of the snakefile (paths to files, core numbers, parameter values, etc)
+\begin{block}{How to?}
+\begin{itemize}
+    \item create a file written in yml or json (eg. \verb|myConfig.yml|)
+    \item run with the \verb|--configfile myConfig.yml| Snakemake option or ii) add \verb|configfile: myConfig.yml| at the beginning of the snakefile
+    \item in the snakefile, call the defined items with \verb|config["item1"]|
+\end{itemize}
+\end{block}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Using a configuration file}
+%-------------------------------------------
+\begin{exampleblock}{myConfig.yml}
 \begin{lstlisting}
-snakemake --dag | dot | display
-snakemake --dag | dot -Tpng > dag.png
+dataDir:
+  Data/
 \end{lstlisting}
-\end{block}
-\begin{center}
-    \includegraphics[width=12cm]{03_workflow/images/FAIR_ex1_o7_dag.png}\\
-    \includegraphics[width=3cm]{03_workflow/images/FAIR_ex1_o5_ruleG.png}
-\end{center}
-\end{frame}
-%-------------------------------------------
-\begin{frame}[containsverbatim]
-\frametitle{Some Snakemake options}
-%-------------------------------------------
-\begin{block}{Running options}
-\begin{itemize}
-    \item automatically create HTML reports (\verb|--report report.html|) containing runtime statistics, a visualization of the workflow topology, used software and data provenance information (need to add jinja2 in dependencies)
-    \item dry-run, do not execute anything, display what would be done: \verb|-n --dryrun|
-    \item print the executed shell command: \verb|-p --printshellcmds |
-    \item print the reason for each rule execution: \verb|-r --reason|
-    \item print a summary and status of rule: \verb|-D|
-    \item limit the number of jobs in parallel: \verb|-j 1| (cores: \verb|--cores 1|)
-\end{itemize}
-\end{block}
-\vfill
-\href{https://snakemake.readthedocs.io/en/stable/executing/cli.html#all-option}{\textcolor{blue}{\underline{all Snakemake options}}}
-\end{frame}
-%-------------------------------------------
-\begin{frame}[containsverbatim]
-\frametitle{Some Snakemake options: configuration file}
-%-------------------------------------------
-\begin{block}{Why and how to use a configuration file?}
-To place all hard-coding values of the snakefile (paths, core numbers, parameter values, etc)
-\begin{itemize}
-    \item file: can be write both in yml or in json
-    \item run: add Snakemake option: \verb|--configfile file.yml| or add \verb|configfile: file.yml| at the beginning of the snakefile
-    \item code: snakefile call of defined items: \verb|config["item1"]| in input/output directive and \verb|{config[item1]}| in shell directive
-\end{itemize}
-\end{block}
+\end{exampleblock}
+\begin{exampleblock}{Replace "Data/..." in inputs by a config call:}
+\begin{lstlisting}
+rule fastqc:   
+   input: config["dataDir"]+"{sample}.fastq.gz"
+\end{lstlisting}
+\end{exampleblock}
+\begin{exampleblock}{And Run with the configfile option:}
+\begin{lstlisting}
+snakemake -c1 -s ex1_o7.smk --configfile myConfig.yml
+\end{lstlisting}
+\end{exampleblock}
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
 \frametitle{File names from the file system}
 %-------------------------------------------
-To infer the identifiers (IDs) from present files in a directory, use the inbuilt \verb|glob_wildcards| function:
-\begin{block}{Ex. of the glob$\_$wilcards function}
+To deduce the identifiers (eg. IDs) of files in a directory, use the inbuilt \verb|glob_wildcards| function:
+\begin{block}{Eg. of the glob$\_$wilcards function}
 \begin{lstlisting}
-IDs, = glob_wildcards("thedir/{id}.fastq")
+IDs, = glob_wildcards("dirpath/{id}.fastq")
 \end{lstlisting}
 \end{block}
-\verb|glob_wildcards()| matches the given pattern against the files present in the file system and thereby infers the values for all wildcards in the pattern, \verb|{id}| here. 
+\verb|glob_wildcards()| matches the given pattern against the files present in the file system and thereby infers the values for all wildcards in the pattern (\verb|{id}| here). 
 \vfill
-Don't forget the coma after the name (left hand side, \verb|IDs| here).
+Don't forget the \textcolor{blue}{coma} after the name (left hand side, \verb|IDs| here).
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
@@ -99,19 +90,60 @@ The specified environment will be created and activated on the fly by Snakemake 
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{IFB cluster options}
+\frametitle{Snakemake DAG visualization}
 %-------------------------------------------
-\begin{block}{interactive session}
-To use the option \verb|--cores=2|, don't forget to ask 2 CPUS for the interactive session (\verb|sinteractive --cpus=2|)
-\end{block}
-\begin{block}{cluster mode}
-To launch the snakefile on a cluster mode, just do:
-\begin{itemize}
-    \item load the \verb|slurm-drmaa| module
-    \item run snakemake with the \verb|--drmaa| option
+\begin{block}{}
+Snakemake uses \verb|dot| tool (from graphviz package) to create diagrams of the complete workflow (\verb|--dag|) or the rules dependencies (\verb|--rulegraph|):
 \begin{lstlisting}
-snakemake --drmaa --jobs=12 -s ex2_o6.smk --configfile ex2_o1.yml
+snakemake --dag -s ex1_o7.smk | dot -Tpng > ex1_o7_dag.png
+snakemake --rulegraph -s ex1_o7.smk | dot -Tpng > ex1_o7_rule.png
 \end{lstlisting}
+\end{block}
+\begin{columns}
+ \column{0.80\textwidth}
+   \begin{center}
+   \includegraphics[height=3.6cm]{03_workflow/images/ex1_o7_dag.png}
+   \end{center}
+ \column{0.20\textwidth}
+    \begin{center}
+    \includegraphics[height=3.6cm]{03_workflow/images/ex1_o7_rule.png}
+    \end{center}
+\end{columns}
+\end{frame}
+%-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Other useful options}
+%-------------------------------------------
+\begin{block}{Running options}
+\begin{itemize}
+    \item dry-run, do not execute anything, display what would be done: \verb|-n --dryrun|
+    \item print the shell command: \verb|-p --printshellcmds |
+    \item print the reason for each rule execution: \verb|-r --reason|
+    \item print a summary and status of rule: \verb|-D|
+    \item limit the number of jobs in parallel: \verb|-j 1| (cores: \verb|-c 1|)
+    \item automatically create HTML reports (\verb|--report report.html|) containing runtime statistics, a visualization of the workflow topology, used software and data provenance information (need to add the \verb|jinja2| package as a dependency)
 \end{itemize}
 \end{block}
+\vfill
+\href{https://snakemake.readthedocs.io/en/stable/executing/cli.html#all-option}{\textcolor{blue}{\underline{all Snakemake options}}}
 \end{frame}
+
+
+%-------------------------------------------
+%\begin{frame}[containsverbatim]
+%\frametitle{IFB cluster options}
+%-------------------------------------------
+%\begin{block}{interactive session}
+%To use the option \verb|--cores=2|, don't forget to ask 2 CPUS for the interactive session (\verb|sinteractive --cpus=2|)
+%\end{block}
+%\begin{block}{cluster mode}
+%To launch the snakefile on a cluster mode, just do:
+%\begin{itemize}
+%    \item load the \verb|slurm-drmaa| module
+%    \item run snakemake with the \verb|--drmaa| option
+%\begin{lstlisting}
+%snakemake --drmaa --jobs=12 -s ex2_o6.smk --configfile ex2_o1.yml
+%\end{lstlisting}
+%\end{itemize}
+%\end{block}
+%\end{frame}

@@ -1,5 +1,5 @@
 %-------------------------------------------
-\begin{frame}{RNAseq analysis}
+\begin{frame}{A classical RNAseq analysis}
 %\againframe<2>{RNAseqWF_diapo}
 %-------------------------------------------
 \begin{block}{Analysis workflow}
@@ -18,7 +18,7 @@ green=input, blue=tool
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Data and command line}
+\frametitle{Data, a bash script and its command line}
 %-------------------------------------------
 \begin{exampleblock}{Data}
 -g genome sequence acces (including extention .fna, .fasta)\\
@@ -131,7 +131,7 @@ cp ex1_o7.smk ex2_o1.smk
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{getops block}
+\frametitle{The getops block}
 %-------------------------------------------
 \begin{exampleblock}{Shell script}
 \begin{lstlisting}
@@ -176,7 +176,7 @@ rm -Rf FastQC/ Result/ Tmp/ Logs/ ; snakemake -s ex2_o1.smk --configfile ex2_o1.
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{for block}
+\frametitle{The for block}
 %-------------------------------------------
 \begin{exampleblock}{Shell script}
 \begin{lstlisting}
@@ -208,7 +208,7 @@ fastqc --outdir FastQC ${sample}.fastq.gz > FastQC/${sample}.log 2>&1
 \end{exampleblock}
 No more need to test the existence of a directory, it is created as needed.
 \begin{exampleblock}{rule fastqc:}
-This rule is already present in the snakefile
+This rule was already present in the snakefile
 \end{exampleblock}
 \end{frame}
 %-------------------------------------------
@@ -347,20 +347,6 @@ rule extract_counts:
 The DESeq2 step is the statistical analysis. From the count matrix, the statistical analysis is managed by a non parallelizable R script, DESeq2.
 \vfill
 So, up to date, the workflow is complete and the only thing left is this DESeq2 statistical analysis. We will see this analysis through the notebooks session.
-\end{frame}
-%-------------------------------------------
-\begin{frame}[containsverbatim]
-\frametitle{Last challenge}
-%-------------------------------------------
-\begin{exampleblock}{}
-Clean, delete and re-run !
-\begin{lstlisting}
-cp ex2_o8.smk RNAseq_analysis.smk
-cp ex2_o1.yml RNAseq_analysis_smkEnv.yml
-rm -Rf FastQC/ Results/ Logs/ Tmp/ 
-snakemake -s  RNAseq_analysis.smk --configfile RNAseq_analysis_smkEnv.yml
-\end{lstlisting}
-\end{exampleblock}
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]

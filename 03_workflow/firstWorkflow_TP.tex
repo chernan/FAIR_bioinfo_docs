@@ -5,13 +5,14 @@
 \begin{exampleblock}{}
 For this practical exercise on Snakemake we will:
 \begin{itemize}
-    \item access to snakemake by the way of a docker container
-    \item access to analysis tools by the way of a conda environment (details about conda will be seen after)
+    \item access to conda by the way of a docker container
+    \item access to snakemake and analysis tools by the way of a conda environment (details about conda will be seen after)
     \item create a first snakefile with one rule
     \item add a second rule to create a first workflow
 \end{itemize}
-During this first exercise, we will execute several cycles: executing snakemake, observing the result and improving the code. Each code version will be noted \verb|ex1_oX.smk| with X a progressive digit.
 \end{exampleblock}
+During this first exercise, we will execute several cycles: executing snakemake, observing the result and improving the code. Each code version will be noted \verb|ex1_oX.smk| with X a progressive digit.\\
+(or save on github ...)
 \end{frame}
 %-------------------------------------------
 \begin{frame}
@@ -28,10 +29,11 @@ During this first exercise, we will execute several cycles: executing snakemake,
 
  \column{0.55\textwidth}
    \begin{exampleblock}{Input data}
-    The input data, the RNASeq reads, may be downloaded from: \url{https://zenodo.org/record/3997237}
+    The input data, the RNASeq reads files, may be downloaded from: \url{https://zenodo.org/record/3997237}
     \begin{center}
         \includegraphics[width=5cm]{03_workflow/images/FAIR_data_zenodo.png}
     \end{center}
+   Download and unzip
    \end{exampleblock}
 \end{columns}
 \end{frame}
@@ -40,7 +42,7 @@ During this first exercise, we will execute several cycles: executing snakemake,
 \frametitle{Exercise setup}
 %-------------------------------------------
 We will access to Snakemake by running a docker image containing the conda tool (among other):
-\begin{exampleblock}{docker miniconda3 (git 2.20.1 + conda 4.8.2)}
+\begin{exampleblock}{docker miniconda3}
 \begin{lstlisting}
 docker run -i -t -v ${PWD}:/data continuumio/miniconda3
 \end{lstlisting}
@@ -64,9 +66,12 @@ channels:
   - bioconda
   - default
 dependencies:
-  - snakemake-minimal=6.5.0 # workflow manager
-  - fastqc=0.11.9 # a quality control tool for fastq data (java)
-  - multiqc=1.9 # an R package to aggregate reports
+  # workflow manager:
+  - bioconda::snakemake-minimal>=6.5 
+  # check quality of fastq data (java)
+  - bioconda::fastqc=0.11.9 
+  # R package to aggregate reports
+  - bioconda::multiqc=1.9 
 \end{lstlisting}
 \end{exampleblock}
 \end{frame}

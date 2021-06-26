@@ -1,11 +1,30 @@
 %-------------------------------------------
+\begin{frame}[containsverbatim]
+\frametitle{Last challenge}
+%-------------------------------------------
+\begin{exampleblock}{Clean, delete and re-run !}
+We may saved the last version of the snakefile and the config file, clean all (but the data) and re-run the workflow.
+\begin{lstlisting}
+cp ex?_o?.smk RNAseq_analysis.smk
+cp ex?_o?.yml RNAseq_analysis_smkEnv.yml
+rm -Rf FastQC/ Results/ Logs/ Tmp/ multiqc_*
+snakemake -c 1 -s  RNAseq_analysis.smk --configfile RNAseq_analysis_smkEnv.yml
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+%-------------------------------------------
 \begin{frame}{Snakemake conclusion}
 %-------------------------------------------
+Now you can transpose/write any shell script to a snakefile and associate it to a configuration file.
 \begin{block}{Power gain}
-We have transposed the shell srcipt to a snakefile associated to a configuration file. This solution will be more powerful when we apply it in a High Performance Computing environment like the IFB cluster.
+\begin{itemize}
+    \item This 2-files solution (snake $\&$ config files) will be more powerful when you apply it in a High Performance Computing environment (like the IFB cluster) if you arrange to put all paths in the config file
+    \item I tune up my snakefile with a reduced dataset (typically the first ~10000 reads of each input fastq file) before running the full analysis
+    \item For analysis with many data files Snakemake handles error recovery from unintentional interruptions for us: just rerun the snakemake command until each file is processed
+\end{itemize}
 \end{block}
 \begin{block}{Reprodicibility issue}
-In terms of reproducibility, we have to focus on the tools environment.
+In terms of reproducibility, we have to focus on the tools environment
 \end{block}
 \end{frame}
 %-------------------------------------------

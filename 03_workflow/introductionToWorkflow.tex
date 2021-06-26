@@ -1,24 +1,38 @@
 %-------------------------------------------
 \begin{frame}{Workflow definition}
 %-------------------------------------------
-\begin{block}{Linked commands}
+%\begin{block}{Linked commands}
  a pool of commands, progressively linked by the treatments of the input data towards the results:\\
-    \includegraphics[width=12cm]{03_workflow/images/FAIR_workflow_schema.png}\\
+    \includegraphics[width=12cm]{03_workflow/images/FAIR_smk_data_wf.png}\\
    arrow: output of tool $n-1$ = input for tool $n$
-\end{block}
-\begin{block}{Data parallelization}
-     several data flows can be processed in parallel \includegraphics[width=12cm]{03_workflow/images/FAIR_workflow_schema_parallelization.png}
+%\end{block}
+\begin{block}{How to save time?}
+Improve algorithms? Are we ready to optimize Bowtie2? hem ... no!\\
+With multiple data for analysis $\Rightarrow$ we can parallelize.
 \end{block}
 \end{frame}
 %-------------------------------------------
-\begin{frame}{A workflow is launched. How to reduce the waiting time?}
+\begin{frame}{Data parallelization}
 %-------------------------------------------
-    Improve algorithms? Are we ready to optimize Bowtie2? hem ... no!\\
-    We have multiple data and steps of analyses $\Rightarrow$ we can parallelize!\\
-    \begin{center}
-            \includegraphics[height=6cm]{03_workflow/images/FAIR_WF_linear_vs_parallel_en.png}
-    \end{center}
+%\begin{block}{Time saving}
+  Several data flows can be processed in parallel:
+  \begin{center}
+     \includegraphics[width=12cm]{03_workflow/images/FAIR_smk_data_wf.png}\\
+     $\Downarrow$\\
+     \includegraphics[width=12cm]{03_workflow/images/FAIR_smk_n_data_wf.png}
+  \end{center}
+  With a multi-cores PC or a computational cluster (ex. 2000 cores), we can attribute one core to one workflow.
+%\end{block}
 \end{frame}
+%-------------------------------------------
+%\begin{frame}{A workflow is launched. How to reduce the waiting time?}
+%-------------------------------------------
+%    Improve algorithms? Are we ready to optimize Bowtie2? hem ... no!\\
+%    We have multiple data and steps of analyses $\Rightarrow$ we can parallelize!\\
+%    \begin{center}
+%            \includegraphics[height=6cm]{03_workflow/images/FAIR_WF_linear_vs_parallel_en.png}
+%    \end{center}
+%\end{frame}
 %-------------------------------------------
 \begin{frame}{Workflow management system}
 %-------------------------------------------
@@ -67,7 +81,7 @@ rule hello_world:
  % docker run -v ${PWD}:/home -w /home snakemake/snakemake snakemake -j1 --snakefile helloworld.smk 
 \end{block}
 \begin{itemize}
-    \item the rule contains only an \verb|output:| directive (due to the usage of the \verb|echo| command)
+    \item this rule contains only an \verb|output:| directive (\verb|echo| command construction)
 \end{itemize}
 \end{frame}
 %-------------------------------------------
@@ -98,25 +112,23 @@ A snakemake workflow links rules thank to the filenames of the rule input and ou
 \begin{frame}[containsverbatim]
 \frametitle{Rule execution order}
 %-------------------------------------------
-Snakemake starts with the first rule that describes the workflow result files. Since they do not exist, it "goes back" through the workflow until it finds an input file to apply a rule to. 
+Snakemake starts with the first rule that describes the workflow result files. Since output files do not exist, it "goes back" through the workflow until it finds a file to apply a rule to. 
 \begin{center}
-    \includegraphics[height=3cm]{03_workflow/images/FAIR_smke_rule_order_en.png}
+    \includegraphics[width=12cm]{03_workflow/images/FAIR_smk_wf_timestamps.png}
 \end{center}
-For determining whether output files have to be re-created, Snakemake checks whether the file modification date (i.e. the timestamp) of any input file of the job is newer than the timestamp of the output file.
+For determining whether output files have to be re-created, Snakemake checks whether the file modification date (i.e. the timestamp) of any file is newer than the timestamp of the output file.
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
 \frametitle{Generalization with wilcards}
 %-------------------------------------------
-Wildcards (Snakemake key feature) allow to replace part of filenames to reduce hardcoding. 
-Using them will have the workflow work on new data, without modification. 
-Input and output directives will be more flexible. 
-
-In the filename, wildcards (writing into \verb|{}|) are automatically resolved
-(ie. replaced by regular expression \verb|".+"|). 
-All filenames matching the expression are concerning by the directive. 
+Wildcards (a Snakemake key feature) allow to replace part of filenames:
+\begin{itemize}
+    \item reduce hardcoding: more flexible input and output directives, work on new data without modification
+    \item are writing into \verb|{}| 
+    \item are automatically resolved (ie. replaced by regular expression \verb|".+"| in filenames)
+\end{itemize}
 Wildcards are specific to a rule, a same file can be accessed by different matching:
-
 \begin{block}{Ex. with the file "101$/$file.A.txt"}
 \begin{lstlisting}
 rule one: output: "{set}1/file.{grp}.txt" => set=10, grp=A
@@ -194,7 +206,7 @@ rule one:
 \end{frame}
 %-------------------------------------------
 \begin{frame}[containsverbatim]
-\frametitle{Snakemake acces}
+\frametitle{Snakemake accesses}
 %-------------------------------------------
 \begin{block}{Laptop with docker}
 \begin{lstlisting}[language=bash]
