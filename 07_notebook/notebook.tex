@@ -386,7 +386,7 @@ Jupyter + Docker = binder
 
 %-------------------------------------------
 \begin{frame}{Jupyter}
-More to come : Jupyter Lab 1.0
+Since June 2019 : Jupyter Lab v1.0 (now v3.0.16)
 
 \begin{center}
     \includegraphics[width=10cm]{07_notebook/images/jupyter_labpreview.png}
@@ -410,24 +410,7 @@ It depends... \pause
 
 %-------------------------------------------
 \begin{frame}{Practical session}
-%-------------------------------------------
-\begin{block}{Analysis workflow}
-    \includegraphics[width=12cm]{01_introduction/images/FAIR_RNAseq_WF.png}\\
-green=input, blue=tool
-\end{block}
-\footnotesize{
-\begin{description}
-    \item[fastqc] control quality of the input reads
-    \item[bowtie2] reads mapping on the genome sequence
-    \item[samtools] mapped reads selection $\&$ formatting
-    \item[HTseq] count table of mapped reads on genes (annotations)
-    \item[DESeq2] statistical analysis: genes list having differential expression
-\end{description}
-}
-\end{frame}
-
 %------------------------------------------------------------
-\begin{frame}{Practical session}
 Savoir FAIRe
 
 \begin{itemize}
@@ -435,7 +418,24 @@ Savoir FAIRe
   \item Learn the structure of an Rmd file
   \item Turn a script into a notebook
   \item Extend the notebook with new functionalities
-  \item Bonus: introduction to Jupyter
+  \item This afternoon: Jupyter with the IFB cluster
 \end{itemize}
+\end{frame}
+
+%-------------------------------------------
+\begin{frame}{Analysis workflow}
+\begin{block}{Analysis workflow}
+    \includegraphics[width=12cm]{01_introduction/images/FAIR_RNAseq_WF.png}\\
+green=input, blue=tool
+\end{block}
+\footnotesize{
+  \begin{description}
+    \item[fastqc] control quality of the input reads
+    \item[bowtie2] reads mapping on the genome sequence
+    \item[samtools] mapped reads selection $\&$ formatting
+    \item[HTseq] count table of mapped reads on genes (annotations)
+    \item[DESeq2] statistical analysis: genes list having differential expression
+  \end{description}
+} 
 \end{frame}
 

@@ -332,7 +332,7 @@ It is because the \verb|fastqc| rule is defined with a list of files and not for
 Thank to the \verb|all| rule, all expected files are designated. So we don't need to give the \verb|fastqc| rule a list anymore and we can replace it to manage only one file and all files one by one. We will gain in power in systems having more than one core.
 \end{exampleblock}
 \begin{exampleblock}{Hint}
-Replace the \verb|expand()| function with a wildcard for one filename in the \verb|fastqc| rule.
+Replace the \verb|expand()| function with a simple wildcard for the filename in the \verb|fastqc| rule.
 \end{exampleblock}
 \end{frame}
 %-------------------------------------------
