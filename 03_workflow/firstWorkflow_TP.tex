@@ -41,15 +41,19 @@ During this first exercise, we will execute several cycles: executing snakemake,
 \begin{frame}[containsverbatim]
 \frametitle{Exercise setup}
 %-------------------------------------------
-We will access to Snakemake by running a docker image containing the conda tool (among other):
-\begin{exampleblock}{docker miniconda3}
-\begin{lstlisting}
-docker run -i -t -v ${PWD}:/data continuumio/miniconda3
+We will access to the analysis tools thanks to a conda environment, \verb|envfair.yml| (cf. next slide), designed for this small workflow:
+\begin{exampleblock}{Conda environment}
+\begin{lstlisting}[language=python]
+# do go to the parent directory of Data (from the downloaded and unziped data):
+cd ......
+# create envfair.yml
 \end{lstlisting}
 \end{exampleblock}
-And, we will access to the analysis tools thanks to a conda environment, \verb|envfair.yml| (cf. next slide), designed for this small workflow:
-\begin{exampleblock}{Conda environment}
+We will access to Snakemake by running a docker image containing the conda tool:
+\begin{exampleblock}{Docker miniconda3}
 \begin{lstlisting}
+docker run -it -v ${PWD}:/data continuumio/miniconda3
+cd data
 conda env create -n envfair -f envfair.yml
 conda activate envfair
 \end{lstlisting}
