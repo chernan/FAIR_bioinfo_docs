@@ -2,11 +2,13 @@
 title: "Literate Programming Practical Session"
 author: "Celine Hernandez, Claire Toffano-Nioche, Thomas Denecker"
 date: "29/06/2021"
-output: 
-  html_notebook: 
+output:
+  html_notebook:
     toc: yes
     number_sections: yes
     theme: cerulean
+  pdf_document:
+    toc: yes
 ---
 
 ```{r include=FALSE}
@@ -95,7 +97,7 @@ The Markdown specification had ambiguities. By consequence, its implementation c
 
 **Exercise: read and understand the Dockerfile**
 
-A Docker image containing Rstudio in its server version is available from DockerHub. It has been built by the Rocker Project community. See https://www.rocker-project.org/.
+A Docker image containing Rstudio in its server version is available from DockerHub. It has been built by the Rocker Project community. See https://www.rocker-project.org/. We will be using another one created by Bioconductor, that is using Rocker as base.
 
 At the end of the Docker practical session, we saw how to use a text file as a "recipe" to build a Docker image containing RStudio (server version). We will use a similar approach here.
 
@@ -165,9 +167,7 @@ To connect to RStudio, use the following credentials:
 
 > Goal: Transform an R script into an RMarkdown file or R Notebook
 
-First download the files from Zenodo, or use a few of the FastQC zip files generated during any of the practical sessions.
-
-URL : 
+As input data, use a few of the FastQC zip files generated during any of the previous practical sessions (session on workflows).
 
 
 **Exercise : have a brief look at the R code**
