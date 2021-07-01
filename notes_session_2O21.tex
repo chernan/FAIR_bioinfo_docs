@@ -1,19 +1,33 @@
 
+\begin{frame}{Notes générales}
+\begin{itemize}
+  \item Exporter les images Docker avant pour éviter les téléchargements
+  \item penser à laisser des passages entre les tables pour faciliter le déplacement des helpers
+  \item Ce(A)C(nrs)I(NRIA)L(ogiciel)L(ibre)
+  \item comparaison github/gitlab
+  \item vérifier les temps nécessaires à chaque partie (ex: sharing 1/2h ok, cluster plutôt 2h, RMarkdown 1h un peu court avec TP mais probablement que 1h30 serait long...)
+  \item ajouter un lien vers le Community IFB, vers d'autres formations pour aller plus loin
+  \item re-centrer sur des notebooks?
+\end{itemize}
+\end{frame}
 
 \begin{frame}{git}
 \begin{itemize}
-  \item rachat github par microsoft : à ne mentionner qu'1 fois plutôt que plusieurs
+  \item rachat github par microsoft : à ne mentionner qu'1 fois plutôt que plusieurs (est aussi dans la partie GitHub)
   \item d13: commencer par un git version pour voir si git est présent en local et sinon, ajouter un déplacement "cd" (-w) dans le docker pour ne pas faire un git depuis la racine
   \item d17: ajouter cd .. avant le clone
 \end{itemize}
 \end{frame}
+
 \begin{frame}{github}
 \begin{itemize}
-  \item ajouter comment créer un dépôt github
+  \item ajouter comment créer un dépôt github et la discussion sur les licences
+  \item ajouter des slides pour présenter les onglets dans l'interface
   \item d28: branche principale a changé de nom : master / main
   \item d50/d263 : changer le nom du fork
 \end{itemize}
 \end{frame}
+
 \begin{frame}{conda}
 \begin{itemize}
   \item d35: supprimer le "env" au create
@@ -21,15 +35,31 @@
   \item ajouter capture écran du site conda hub avant le 1er install pour voir d'où provient les outils/chanels
 \end{itemize}
 \end{frame}
+
+\begin{frame}{docker}
+\begin{itemize}
+    \item mettre à jour le dockerfile dans le tout dernier exercice
+    \item chenger le docker start (enlever les paramères et /bin/bash)
+    \item les machines linux ont besoin de lancer docker avec sudo ?!
+    \item : ajouter cc sur pieds de page
+    \item ajouter docker volume? docker system prune ?
+\end{itemize}
+\end{frame}
+
 \begin{frame}{smk}
 \begin{itemize}
     \item préparer sur une clef usb l'image avec smk-minimal, fastqc et multiqc car bcp trop long avec la connection du iscpif  (institut des systemes complexes paris ile de france) ! ou alors faire une pause Kfé pdt ce tps !
     \item d22: "input" est après le répertoire
-    \d??: directory("multiqc_data") => provoque un warnng 
+    \item d??: directory("multiqc\_data") => provoque un warning 
+    \item suggestion Gildas : inclure https://workflowhub.eu/ et le projet RO-Crate.
 \end{itemize}
 \end{frame}
+
 \begin{frame}{litterate prog}
 \begin{itemize}
     \item ajouter url article
+    \item exporter l'image rstudio avant
+    \item essayer d'alléger l'image...
 \end{itemize}
 \end{frame}
+
